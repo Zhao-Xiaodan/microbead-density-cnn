@@ -4,17 +4,18 @@ import cv2
 import numpy as np
 from pathlib import Path
 
-def crop_useful_regions(input_folder, output_folder, crop_size=(512, 512), overlap=100,
-                        min_content_percentage=10):
+def crop_with_edge_detection(input_folder, output_folder, crop_size=(512, 512), overlap=100,
+                           edge_buffer=50, min_content_percentage=70):
     """
-    Creates crops only from the useful part of microscope images (the illuminated circular region)
+    Creates crops from microscope images while avoiding the edge of the circular field of view
 
     Parameters:
     input_folder: str - path to folder containing original images
     output_folder: str - path to save cropped images
     crop_size: tuple - size of crops (width, height)
     overlap: int - number of pixels to overlap between crops
-    min_content_percentage: int - minimum percentage of non-black pixels to keep a crop
+    edge_buffer: int - buffer distance from detected edge to avoid
+    min_content_percentage: int - minimum percentage of useful area to keep a crop
     """
     # Create output folder if it doesn't exist
     os.makedirs(output_folder, exist_ok=True)
@@ -46,30 +47,29 @@ def crop_useful_regions(input_folder, output_folder, crop_size=(512, 512), overl
             # Get image dimensions
             height, width = img.shape[:2]
 
-            # Create a mask for the useful region (the bright circular area)
+            # Convert to grayscale
             gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) if len(img.shape) == 3 else img
 
             # Apply threshold to identify the bright area
-            _, binary = cv2.threshold(gray, 20, 255, cv2.THRESH_BINARY)
+            _, binary = cv2.threshold(gray, 30, 255, cv2.THRESH_BINARY)
 
-            # Find contours in the binary image
-            contours, _ = cv2.findContours(binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+            # Find edges using Canny edge detection
+            edges = cv2.Canny(binary, 50, 150)
 
-            # Create mask from the largest contour (which should be the circular or elliptical region)
-            mask = np.zeros_like(gray)
-            if contours:
-                largest_contour = max(contours, key=cv2.contourArea)
-                cv2.drawContours(mask, [largest_contour], 0, 255, -1)
-            else:
-                # If no contours found, create a circular mask at the center
-                center_x, center_y = width // 2, height // 2
-                radius = min(width, height) // 2 - 10  # Slightly smaller than half the smaller dimension
-                cv2.circle(mask, (center_x, center_y), radius, 255, -1)
+            # Dilate edges to create a buffer zone
+            kernel = np.ones((edge_buffer, edge_buffer), np.uint8)
+            edge_zone = cv2.dilate(edges, kernel, iterations=1)
 
-            # Save mask for debugging (optional)
-            mask_name = f"{os.path.splitext(img_file)[0]}_mask.png"
-            mask_path = os.path.join(curr_output_folder, mask_name)
-            cv2.imwrite(mask_path, mask)
+            # Create mask: 255 for good areas (inside circle, away from edge), 0 for bad areas
+            # Invert the edge_zone so edges are 0, non-edges are 255
+            safe_zone_mask = cv2.bitwise_not(edge_zone)
+
+            # Also mask out areas outside the circle (dark areas)
+            safe_zone_mask = cv2.bitwise_and(safe_zone_mask, binary)
+
+            # Save masks for debugging
+            cv2.imwrite(os.path.join(curr_output_folder, f"{os.path.splitext(img_file)[0]}_edges.png"), edges)
+            cv2.imwrite(os.path.join(curr_output_folder, f"{os.path.splitext(img_file)[0]}_safe_zone.png"), safe_zone_mask)
 
             # Calculate steps for crops
             step_x = crop_size[0] - overlap
@@ -80,12 +80,12 @@ def crop_useful_regions(input_folder, output_folder, crop_size=(512, 512), overl
             for y in range(0, height-crop_size[1]+1, step_y):
                 for x in range(0, width-crop_size[0]+1, step_x):
                     # Extract the current region of the mask
-                    current_mask = mask[y:y+crop_size[1], x:x+crop_size[0]]
+                    current_mask = safe_zone_mask[y:y+crop_size[1], x:x+crop_size[0]]
 
                     # Calculate percentage of useful content in this crop
                     mask_percentage = (np.sum(current_mask) / 255) / (crop_size[0] * crop_size[1]) * 100
 
-                    # Only process crops with enough useful content
+                    # Only process crops with enough useful content and no edge interference
                     if mask_percentage >= min_content_percentage:
                         # Extract crop from original image
                         crop = img[y:y+crop_size[1], x:x+crop_size[0]]
@@ -98,19 +98,20 @@ def crop_useful_regions(input_folder, output_folder, crop_size=(512, 512), overl
 
                         crop_number += 1
 
-            print(f"Created {crop_number} useful crops from {img_path}")
+            print(f"Created {crop_number} edge-free crops from {img_path}")
 
 def main():
     # Set your folders here
     input_folder = "original_images"
     output_folder = "cropped_images"
 
-    # Set crop size and overlap
+    # Set parameters
     crop_size = (512, 512)  # adjust based on your needs
     overlap = 50  # adjust overlap between crops
-    min_content_percentage = 50  # minimum percentage of useful content to keep a crop
+    edge_buffer = 40  # pixels to stay away from detected edges
+    min_content_percentage = 90  # minimum percentage of useful content to keep a crop
 
-    crop_useful_regions(input_folder, output_folder, crop_size, overlap, min_content_percentage)
+    crop_with_edge_detection(input_folder, output_folder, crop_size, overlap, edge_buffer, min_content_percentage)
 
 if __name__ == "__main__":
     main()
