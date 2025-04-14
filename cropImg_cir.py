@@ -67,6 +67,18 @@ def crop_with_edge_detection(input_folder, output_folder, crop_size=(512, 512), 
             # Also mask out areas outside the circle (dark areas)
             safe_zone_mask = cv2.bitwise_and(safe_zone_mask, binary)
 
+            # Create a rectangular mask to keep only the middle 3/4 of the image
+            rect_mask = np.ones((height, width), dtype=np.uint8) * 255
+            top_cutoff = int(height * 0.125)  # Exclude top 1/8 of the image
+            bottom_cutoff = int(height * 0.875)  # Exclude bottom 1/8 of the image
+
+            # Set top 1/8 and bottom 1/8 to black (0)
+            rect_mask[:top_cutoff, :] = 0
+            rect_mask[bottom_cutoff:, :] = 0
+
+            # Apply the rectangular mask to the safe zone
+            safe_zone_mask = cv2.bitwise_and(safe_zone_mask, rect_mask)
+
             # Save masks for debugging
             cv2.imwrite(os.path.join(curr_output_folder, f"{os.path.splitext(img_file)[0]}_edges.png"), edges)
             cv2.imwrite(os.path.join(curr_output_folder, f"{os.path.splitext(img_file)[0]}_safe_zone.png"), safe_zone_mask)
