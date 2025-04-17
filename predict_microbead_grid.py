@@ -197,16 +197,150 @@ def predict_density(model, image_path, transform, device):
         print(f"Error predicting for image {image_path}: {str(e)}")
         return None
 
-# 4. Function to create boxplot with scatter overlay - FIXED to preserve exact Excel order
+# 4. NEW DIRECT BOXPLOT FUNCTION - Creates boxplots with exact Excel order
+def create_direct_boxplot(results_df, output_path, title, custom_labels):
+    """
+    Create boxplots with scatter points that directly follow the exact Excel order.
+    This function creates two versions: one with log scale and one with linear scale.
+
+    Parameters:
+        results_df (DataFrame): DataFrame with the density results
+        output_path (str): Path to save the output figure (without extension)
+        title (str): Title for the plot
+        custom_labels (list): Exact list of labels in the desired order from Excel
+    """
+    import matplotlib.pyplot as plt
+    import numpy as np
+
+    # Get unique image names
+    image_names = results_df['image_name'].unique()
+    sorted_image_names = sorted(image_names)
+
+    # Step 1: Create a map of image names to their corresponding label
+    # Use custom_labels in their EXACT original order
+    image_label_map = {}
+    for i, image_name in enumerate(sorted_image_names):
+        if i < len(custom_labels):
+            image_label_map[image_name] = custom_labels[i]
+
+    # Step 2: Organize data by image name for direct plotting
+    # This avoids pandas' automatic ordering
+    image_data = {}
+    for image_name in image_names:
+        # Get all density values for this image
+        image_data[image_name] = results_df[results_df['image_name'] == image_name]['density'].values
+
+    # Create manual boxplot in the EXACT order of custom_labels
+    box_positions = []
+    box_labels = []
+    all_data = []
+
+    # Track which images we've already plotted to handle duplicates
+    processed_images = set()
+
+    # Follow the exact order in custom_labels
+    for i, label in enumerate(custom_labels):
+        # Find the image that maps to this label
+        for image_name, mapped_label in image_label_map.items():
+            # If we find a match AND we haven't processed this image yet
+            if mapped_label == label and image_name not in processed_images:
+                # Add data for this image
+                all_data.append(image_data[image_name])
+                # Record the position
+                box_positions.append(i + 1)  # 1-based positions
+                # Add the label
+                box_labels.append(label)
+                # Mark this image as processed
+                processed_images.add(image_name)
+                # Stop looking for this label
+                break
+
+    # Define common properties for both plots
+    boxprops = dict(linewidth=1.5, color='black')
+    medianprops = dict(linewidth=2.0, color='#323232')
+
+    # Generate colors for each box - similar to the Tab10 colormap
+    import matplotlib.cm as cm
+    colors = cm.tab10(np.linspace(0, 1, len(set(custom_labels))))
+
+    # Map each box to a color based on its label
+    unique_labels = list(set(custom_labels))
+    color_map = {label: colors[i % len(colors)] for i, label in enumerate(unique_labels)}
+
+    # Function to create a single plot with the specified scale
+    def create_plot(scale_type, output_file):
+        # Set up the figure
+        plt.figure(figsize=(14, 8))
+
+        # Extract background color from current style for consistent look
+        bg_color = plt.rcParams.get('axes.facecolor', '#f0f0f0')
+        plt.gca().set_facecolor(bg_color)
+
+        # Create the boxplot with exact positioning
+        bp = plt.boxplot(all_data, positions=box_positions, widths=0.6,
+                        patch_artist=True, boxprops=boxprops, medianprops=medianprops)
+
+        # Apply colors to boxes
+        for i, patch in enumerate(bp['boxes']):
+            label = box_labels[i]
+            color_idx = unique_labels.index(label)
+            patch.set_facecolor(colors[color_idx % len(colors)])
+            patch.set_alpha(0.8)
+
+        # Add scatter points for individual data points
+        for i, data in enumerate(all_data):
+            # Get position for this box
+            pos = box_positions[i]
+            # Add jitter to x position
+            jitter = np.random.normal(0, 0.05, size=len(data))
+            # Plot the data points
+            plt.scatter(jitter + pos, data, color='black', alpha=0.6, s=40)
+
+        # Set y-axis scale according to parameter
+        if scale_type == 'log':
+            plt.yscale('log')
+            scale_title = title + " (Log Scale)"
+        else:
+            plt.yscale('linear')
+            scale_title = title + " (Linear Scale)"
+
+        # Set the x-ticks to the exact positions we used
+        plt.xticks(box_positions, box_labels, rotation=45, ha='right')
+
+        # Add grid, title, and labels
+        plt.grid(True, axis='y', alpha=0.3)
+        plt.title(scale_title, fontsize=16)
+        plt.xlabel('Sample', fontsize=14)
+        plt.ylabel('Predicted Density', fontsize=14)
+
+        # Ensure the figure looks good
+        plt.tight_layout()
+
+        # Save the figure
+        plt.savefig(output_file, dpi=300, bbox_inches='tight')
+        plt.close()
+
+    # Create both log and linear scale versions
+    log_output_path = output_path.replace('.png', '_log.png')
+    linear_output_path = output_path.replace('.png', '_linear.png')
+
+    # Generate both plots
+    create_plot('log', log_output_path)
+    create_plot('linear', linear_output_path)
+
+    return log_output_path, linear_output_path
+
+# 5. ORIGINAL Function to create boxplot with scatter overlay - KEPT FOR COMPATIBILITY
 def create_boxplot_with_scatter(results_df, output_path, title, combine_labels=False):
     """
-    Create a boxplot with scatter points for each image.
+    Create a boxplot with scatter points for each image, keeping labels separate
+    and maintaining the exact order from Excel.
 
     Parameters:
         results_df (DataFrame): DataFrame with results
         output_path (str): Path to save the output figure
         title (str): Title for the plot
-        combine_labels (bool): If True, combine identical labels; if False, keep them separate (default: False)
+        combine_labels (bool): This parameter is ignored - we always keep labels separate
     """
     import matplotlib.pyplot as plt
     import seaborn as sns
@@ -216,74 +350,103 @@ def create_boxplot_with_scatter(results_df, output_path, title, combine_labels=F
     # Create a copy to avoid modifying the original dataframe
     plot_df = results_df.copy()
 
-    # If we have custom_label and order_index columns, use them
+    # Always keep labels separate, regardless of what was passed
+    combine_labels = False
+
+    # If we have custom_label and order_index columns, use them for ordering
     if 'custom_label' in plot_df.columns and 'order_index' in plot_df.columns:
-        # This is the case where we have Excel labels
+        # Create a unique identifier for each image (using image_name)
+        # This ensures each image gets its own box, even with identical labels
+        plot_df['plot_label'] = plot_df.apply(
+            lambda row: f"{row['custom_label']}|{row['image_name']}",
+            axis=1
+        )
 
-        # If we should NOT combine labels (the default), make them unique
-        if not combine_labels:
-            # Create unique labels by adding order_index to ensure exact Excel order is preserved
-            plot_df['plot_label'] = plot_df.apply(
-                lambda row: f"{row['custom_label']}_{row['order_index']}",
-                axis=1
-            )
+        # Create a display label (what appears on the x-axis)
+        plot_df['display_label'] = plot_df['custom_label']
 
-            # Create display labels without the order_index
-            plot_df['display_label'] = plot_df['custom_label']
+        # Group by the plot label and get the order index for each group
+        # This maintains the exact order from Excel
+        label_order_map = {}
 
-            # Get the unique plot labels in order_index order
-            ordered_df = plot_df.sort_values('order_index')
-            unique_labels = ordered_df['plot_label'].unique().tolist()
+        # Get a representative order_index for each unique plot_label
+        for label, group in plot_df.groupby('plot_label'):
+            # Use the first order_index for this group
+            label_order_map[label] = group['order_index'].iloc[0]
 
-            # Create label mapping for display
-            label_map = dict(zip(plot_df['plot_label'], plot_df['display_label']))
-        else:
-            # We want to combine identical labels
-            plot_df['plot_label'] = plot_df['custom_label']
+        # Get all unique plot labels
+        all_plot_labels = plot_df['plot_label'].unique()
 
-            # Get the unique labels in order_index order (keep first occurrence of each label)
-            ordered_df = plot_df.sort_values('order_index').drop_duplicates('custom_label')
-            unique_labels = ordered_df['plot_label'].unique().tolist()
+        # Sort the plot labels by their order_index (Excel order)
+        sorted_labels = sorted(all_plot_labels, key=lambda x: label_order_map[x])
 
-            # No special mapping needed since we're using the labels directly
-            label_map = None
+        # Create label mapping for display (remove the image_name part)
+        label_map = {label: label.split('|')[0] for label in sorted_labels}
+
+        # Use the sorted labels as categories
+        unique_labels = sorted_labels
     else:
-        # No Excel labels, use image_name as fallback
-        if not combine_labels:
-            # Create unique labels based on image_name to prevent combining
-            plot_df['plot_label'] = plot_df.apply(
-                lambda row: f"{row['image_name']}_{row.name}",  # row.name is the DataFrame index
-                axis=1
-            )
-            plot_df['display_label'] = plot_df['image_name']
+        # No Excel labels, use image_name and create a simple sequential order
+        plot_df['plot_label'] = plot_df['image_name']
+        plot_df['display_label'] = plot_df['image_name']
 
-            # Preserve the order labels appear in the dataframe
-            unique_labels = []
-            for idx, row in plot_df.iterrows():
-                if row['plot_label'] not in unique_labels:
-                    unique_labels.append(row['plot_label'])
+        # Get unique image names in the order they appear
+        unique_labels = plot_df['plot_label'].unique()
 
-            # Create label mapping for display
-            label_map = dict(zip(plot_df['plot_label'], plot_df['display_label']))
-        else:
-            # Use image_name directly and combine identical names
-            plot_df['plot_label'] = plot_df['image_name']
-            unique_labels = plot_df['plot_label'].unique().tolist()
-            label_map = None
+        # Create a simple label mapping (identical in this case)
+        label_map = {label: label for label in unique_labels}
 
-    # Create categorical type to preserve order
+    # Create categorical type to enforce the exact order we want
     plot_df['plot_label'] = pd.Categorical(
         plot_df['plot_label'],
         categories=unique_labels,
         ordered=True
     )
 
-    # Create the figure
+    # Create the figure with appropriate styling
     plt.figure(figsize=(14, 8))
 
-    # Create boxplot
+    # Use a safer approach to styling - checking available styles first
+    try:
+        # Try to use a seaborn style if available
+        import matplotlib.style as mplstyle
+        available_styles = mplstyle.available
+
+        # Check if any seaborn styles are available
+        seaborn_styles = [style for style in available_styles if 'seaborn' in style]
+        if seaborn_styles:
+            # Use the first available seaborn style
+            plt.style.use(seaborn_styles[0])
+        else:
+            # Fallback to a default style that should be available
+            plt.style.use('default')
+    except Exception as e:
+        print(f"  Warning: Could not set plot style: {str(e)}")
+        # Continue without setting a style
+
+    # Create boxplot with custom colors
+    medianprops = dict(color='#323232')  # Dark gray median line
     box = sns.boxplot(x='plot_label', y='density', data=plot_df,
-                      palette='Set3', hue='plot_label', legend=False)
+                      patch_artist=True,
+                      medianprops=medianprops)
+
+    # Get unique groups for coloring
+    if 'custom_label' in plot_df.columns:
+        unique_groups = plot_df['custom_label'].unique()
+    else:
+        unique_groups = plot_df['image_name'].unique()
+
+    # Generate colors for each unique group (similar to particleTrackCircle's approach)
+    import matplotlib.cm as cm
+    colors = cm.tab10(np.linspace(0, 1, len(unique_groups)))
+
+    # Map each box to its color
+    for i, patch in enumerate(box.artists):
+        if i < len(unique_labels):
+            label = unique_labels[i].split('_')[0]  # Get the base label without the index
+            color_idx = np.where(unique_groups == label)[0][0] % len(colors)
+            patch.set_facecolor(colors[color_idx])
+            patch.set_alpha(0.8)
 
     # Add scatter points
     sns.stripplot(x='plot_label', y='density', data=plot_df,
@@ -510,7 +673,9 @@ def main():
         transforms.Normalize(mean=[0.5], std=[0.5]),
     ])
 
-    print(f"Combine identical labels: {args.combine_labels}")
+    # Note about combine_labels parameter - we're keeping this for backwards compatibility
+    # but the modified boxplot function will always keep labels separate
+    print(f"Using separate labels for each image, even if they have identical text")
 
     # Get all subfolders in the input directory
     input_path = Path(args.input_dir)
@@ -660,49 +825,36 @@ def main():
             print(f"  Image names found: {image_names}")
             print(f"  Custom labels found: {custom_labels}")
 
-            # Prepare data for boxplot
-            boxplot_df = subfolder_df.copy()
+            # If we have valid custom labels from Excel, use the direct boxplot function
+            if custom_labels and len(custom_labels) >= len(image_names):
+                print(f"  Creating boxplot with EXACT Excel order: {custom_labels}")
 
-            # Attempt to match filenames with labels
-            if custom_labels:
-                try:
-                    # Sort the image names to ensure consistent order
-                    sorted_image_names = sorted(list(image_names))
-                    print(f"  Sorted image names: {sorted_image_names}")
+                # Use the direct boxplot function that follows Excel order exactly
+                boxplot_log_path, boxplot_linear_path = create_direct_boxplot(
+                    subfolder_df,
+                    boxplot_path,
+                    f"Microbead Density Distribution - {subfolder_name}",
+                    custom_labels
+                )
 
-                    # Map image names to custom labels if possible
-                    if len(custom_labels) >= len(sorted_image_names):
-                        # Map each sorted image name to corresponding label from Excel in order
-                        label_map = {name: f"{label}" for name, label in
-                                    zip(sorted_image_names, custom_labels[:len(sorted_image_names)])}
+                print(f"  Created log scale boxplot at: {boxplot_log_path}")
+                print(f"  Created linear scale boxplot at: {boxplot_linear_path}")
+            else:
+                # Fall back to the standard boxplot if we don't have proper labels
+                print(f"  No valid Excel labels found, using standard boxplot")
 
-                        print(f"  Created label mapping: {label_map}")
+                # Prepare data for the standard boxplot
+                boxplot_df = subfolder_df.copy()
 
-                        # Add labels to dataframe
-                        boxplot_df['custom_label'] = boxplot_df['image_name'].map(label_map)
+                # Create boxplot with the standard function (log scale only)
+                boxplot_path = create_boxplot_with_scatter(
+                    boxplot_df,
+                    boxplot_path,
+                    f"Microbead Density Distribution - {subfolder_name}",
+                    False  # Always keep labels separate
+                )
 
-                        # Create order_index that EXACTLY matches Excel position
-                        excel_order = {label: i for i, label in enumerate(custom_labels)}
-                        boxplot_df['order_index'] = boxplot_df['custom_label'].map(excel_order)
-
-                        # Print the exact order from Excel for verification
-                        print(f"  Excel label order: {custom_labels[:len(sorted_image_names)]}")
-                    else:
-                        # Not enough labels, use default
-                        print(f"  Not enough labels ({len(custom_labels)}) for all images ({len(sorted_image_names)})")
-                        # We'll fallback to using image names without labels
-                except Exception as e:
-                    print(f"  Error matching labels to images: {str(e)}")
-                    import traceback
-                    traceback.print_exc()
-
-            # Create boxplot with the simplified function
-            create_boxplot_with_scatter(
-                boxplot_df,
-                boxplot_path,
-                f"Microbead Density Distribution - {subfolder_name}",
-                args.combine_labels
-            )
+                print(f"  Created boxplot visualization at {boxplot_path}")
 
             print(f"  Created boxplot visualization at {boxplot_path}")
 
@@ -730,14 +882,36 @@ def main():
         print(f"\nSaved all predictions to {combined_results_path}")
         print(f"Saved summary statistics to {combined_summary_path}")
 
-        # Create a combined boxplot with subfolder grouping using the simplified function
+        # Create a combined boxplot
         combined_boxplot_path = os.path.join(results_dir, "combined_density_boxplot.png")
-        create_boxplot_with_scatter(
-            all_results,
-            combined_boxplot_path,
-            "Microbead Density Distribution - All Samples",
-            args.combine_labels
-        )
+
+        # Collect all custom labels across all subfolders to maintain global order
+        all_custom_labels = []
+        for subfolder in subfolders:
+            subfolder_labels = extract_labels_from_file(subfolder)
+            if subfolder_labels:
+                all_custom_labels.extend(subfolder_labels)
+
+        # If we have custom labels, use the direct boxplot method
+        if all_custom_labels:
+            print(f"Creating combined boxplot with all labels in exact order")
+            combined_log_path, combined_linear_path = create_direct_boxplot(
+                all_results,
+                combined_boxplot_path,
+                "Microbead Density Distribution - All Samples",
+                all_custom_labels
+            )
+            print(f"Created combined log scale visualization at {combined_log_path}")
+            print(f"Created combined linear scale visualization at {combined_linear_path}")
+        else:
+            # Fall back to standard method
+            combined_boxplot_path = create_boxplot_with_scatter(
+                all_results,
+                combined_boxplot_path,
+                "Microbead Density Distribution - All Samples",
+                False  # Always use False to keep labels separate
+            )
+            print(f"Created combined visualization at {combined_boxplot_path}")
 
         print(f"Created combined visualization at {combined_boxplot_path}")
 
