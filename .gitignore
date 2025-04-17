@@ -1,0 +1,40 @@
+
+# Ignore all PNG files
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+
+# Ignore Excel and CSV files
+*.xlsx
+*.csv
+
+# But keep specific CSV file
+!dataset/density.csv
+
+# Ignore most model files but keep the best one
+/model/*
+!/model/best_model_batch32_filters128-256-512.pth
+
+# Ignore large datasets and results
+/original_images/
+/cropped_images/
+/prediction_results/
+/prediction_crops/
+/training_results/
+/backup training results/
+/backup_original_images/
+/data/
+/new_images/
+
+# Common files to ignore
+__pycache__/
+*.py[cod]
+*$py.class
+.DS_Store
+.env
+.venv
+env/
+venv/
+ENV/

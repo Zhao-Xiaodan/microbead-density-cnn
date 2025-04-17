@@ -24,7 +24,7 @@ def match_cropped_images_with_density(cropped_images_path, density_with_filename
     filename_to_density = {}
     for _, row in original_df.iterrows():
         # Extract the base part of the filename (without extension)
-        base_name = row['filename']
+        base_name = os.path.splitext(row['filename'])[0] if '.' in row['filename'] else row['filename']
         density = row['density']
         filename_to_density[base_name] = density
 
@@ -39,59 +39,79 @@ def match_cropped_images_with_density(cropped_images_path, density_with_filename
 
     # Process each cropped image
     for cropped_file in cropped_files:
-        # Remove extension for processing and store filename without extension
+        # Remove extension for processing
         cropped_base = os.path.splitext(cropped_file)[0]
 
-        # Extract the original filename part (before _crop)
-        match = re.match(r'(.*?)_crop', cropped_base)
+        # Extract the original filename part (before _grid)
+        # For new format like "10X_照片 04-04-25 下午4 52 54_grid_r0_c1"
+        match = re.match(r'(.*?)_grid_r\d+_c\d+$', cropped_base)
+
         if match:
             original_base = match.group(1)
 
             # Find corresponding density
             density = None
-            for orig_name in filename_to_density:
-                # Check if the original name appears in the cropped filename
-                if original_base == orig_name or original_base.strip() == orig_name.strip():
-                    density = filename_to_density[orig_name]
-                    break
 
-            # If no exact match, try fuzzy matching
-            if density is None:
-                for orig_name in filename_to_density:
-                    # Check if the original name's date-time pattern appears in the cropped filename
-                    date_time_pattern = re.search(r'(\d{2}-\d{2}-\d{2}.*?\d+\s+\d+\s+\d+)', orig_name)
-                    if date_time_pattern and date_time_pattern.group(1) in cropped_base:
-                        density = filename_to_density[orig_name]
-                        break
+            # First try direct matching with the base name
+            if original_base in filename_to_density:
+                density = filename_to_density[original_base]
+            else:
+                # Extract the date-time pattern to match with original filenames
+                date_match = re.search(r'(\d{2}-\d{2}-\d{2}[^_]+)', original_base)
+                if date_match:
+                    date_pattern = date_match.group(1)
 
-            # Add to results with filename without extension
+                    # Try to find a matching original filename with this date pattern
+                    for orig_name in filename_to_density:
+                        if date_pattern in orig_name:
+                            density = filename_to_density[orig_name]
+                            break
+
+            # Add to results
             results.append({'filename': cropped_base, 'density': density})
         else:
-            # If no _crop pattern found, add with unknown density
+            # If no grid pattern found, add with unknown density
             results.append({'filename': cropped_base, 'density': None})
 
     # Create DataFrame from results
     result_df = pd.DataFrame(results)
 
     # Sort the DataFrame
-    # First by timestamp in the filename (extract date and time)
+    # First by magnification and timestamp in the filename
     def extract_sort_key(filename):
+        # Extract magnification (e.g., 10X, 5X)
+        mag_match = re.search(r'^(\d+X)', filename)
+        mag = mag_match.group(1) if mag_match else ""
+
         # Try to extract time info for sorting
-        match = re.search(r'(\d{2}-\d{2}-\d{2}.*?\d+\s+\d+\s+\d+)', filename)
-        if match:
-            return match.group(1)
+        date_match = re.search(r'(\d{2}-\d{2}-\d{2}[^_]+)', filename)
+        date_time = date_match.group(1) if date_match else ""
 
-        # If no match, try to extract crop number for secondary sorting
-        crop_match = re.search(r'_crop_(\d+)', filename)
-        if crop_match:
-            return crop_match.group(1)
+        # Extract grid coordinates for secondary sorting
+        grid_match = re.search(r'_grid_r(\d+)_c(\d+)', filename)
+        r_num = int(grid_match.group(1)) if grid_match else 0
+        c_num = int(grid_match.group(2)) if grid_match else 0
 
-        return filename
+        return (mag, date_time, r_num, c_num)
 
-    # Sort by original timestamp, then by crop number
-    result_df['sort_key'] = result_df['filename'].apply(extract_sort_key)
-    result_df.sort_values(['sort_key', 'filename'], inplace=True)
-    result_df.drop('sort_key', axis=1, inplace=True)
+    # Create sort key columns for explicit sorting
+    result_df['magnification'] = result_df['filename'].apply(
+        lambda x: re.search(r'^(\d+X)', x).group(1) if re.search(r'^(\d+X)', x) else "")
+
+    result_df['datetime'] = result_df['filename'].apply(
+        lambda x: re.search(r'(\d{2}-\d{2}-\d{2}[^_]+)', x).group(1) if re.search(r'(\d{2}-\d{2}-\d{2}[^_]+)', x) else "")
+
+    result_df['row_num'] = result_df['filename'].apply(
+        lambda x: int(re.search(r'_grid_r(\d+)_c\d+', x).group(1)) if re.search(r'_grid_r(\d+)_c\d+', x) else 999)
+
+    result_df['col_num'] = result_df['filename'].apply(
+        lambda x: int(re.search(r'_grid_r\d+_c(\d+)', x).group(1)) if re.search(r'_grid_r\d+_c(\d+)', x) else 999)
+
+    # Sort by magnification, datetime, row number, and column number
+    result_df = result_df.sort_values(['magnification', 'datetime', 'row_num', 'col_num'])
+
+    # Drop the sorting columns before saving
+    result_df = result_df.drop(['magnification', 'datetime', 'row_num', 'col_num'], axis=1)
 
     # Save to CSV
     result_df.to_csv(output_csv_path, index=False, encoding='utf-8-sig')

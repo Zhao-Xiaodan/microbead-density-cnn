@@ -1,0 +1,26 @@
+
+name: microbead-cnn
+channels:
+  - apple
+  - pytorch
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9
+  - pip=23.0
+  - pytorch-nightly::pytorch
+  - pytorch-nightly::torchvision
+  - numpy
+  - pandas
+  - matplotlib
+  - pillow
+  - scikit-learn
+  - opencv
+  - jpeg  # Try this instead of libjpeg
+  - seaborn  # Added seaborn dependency
+  - openpyxl  # For reading/writing Excel .xlsx files
+  - xlrd  # For reading older Excel .xls files
+  - pytest  # Useful for testing
+  - pip:
+    - tqdm
+    - pathlib
