@@ -1,5 +1,5 @@
 
-#!/usr/bin/env python
+import tempfile
 import torch
 import torch.nn as nn
 from torchvision import transforms
@@ -70,7 +70,7 @@ def crop_center_grid(image_path, output_folder, grid_size=4, crop_size=512, visu
     img = cv2.imread(image_path)
     if img is None:
         print(f"Could not read image: {image_path}")
-        return []
+        return [], [], None
 
     # Get image dimensions
     height, width = img.shape[:2]
@@ -90,6 +90,7 @@ def crop_center_grid(image_path, output_folder, grid_size=4, crop_size=512, visu
         start_y = max(0, height - total_grid_height)
 
     # Make a copy of the original image for visualization
+    viz_path = None
     if visualize:
         viz_img = img.copy()
         # Draw the overall grid boundary in red
@@ -171,7 +172,7 @@ def crop_center_grid(image_path, output_folder, grid_size=4, crop_size=512, visu
         viz_name = f"{base_name}_grid_visualization.jpg"
         viz_path = os.path.join(output_folder, viz_name)
         cv2.imwrite(viz_path, viz_img)
-        print(f"Created visualization image: {viz_path}")
+        print(f"    Created visualization image: {viz_path}")
 
     return crop_paths, crop_info, viz_path
 
@@ -196,59 +197,110 @@ def predict_density(model, image_path, transform, device):
         print(f"Error predicting for image {image_path}: {str(e)}")
         return None
 
-# 4. Function to create boxplot with scatter overlay
-def create_boxplot_with_scatter(results_df, output_path, title):
+# 4. Function to create boxplot with scatter overlay - FIXED to preserve exact Excel order
+def create_boxplot_with_scatter(results_df, output_path, title, combine_labels=False):
     """
-    Create a boxplot combined with scatter points for each image
+    Create a boxplot with scatter points for each image.
+
+    Parameters:
+        results_df (DataFrame): DataFrame with results
+        output_path (str): Path to save the output figure
+        title (str): Title for the plot
+        combine_labels (bool): If True, combine identical labels; if False, keep them separate (default: False)
     """
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    import pandas as pd
+    import numpy as np
+
     # Create a copy to avoid modifying the original dataframe
     plot_df = results_df.copy()
 
-    # Extract magnification information from image names (e.g., 5X, 10X, etc.)
-    def extract_magnification(name):
-        if 'X_' in name or 'X ' in name:
-            parts = name.split('X')[0]
-            # Try to extract the number before X
-            try:
-                mag = parts.split('_')[-1].strip()
-                return f"{mag}X"
-            except:
-                return name
-        return name
+    # If we have custom_label and order_index columns, use them
+    if 'custom_label' in plot_df.columns and 'order_index' in plot_df.columns:
+        # This is the case where we have Excel labels
 
-    # Apply the magnification extraction
-    plot_df['display_name'] = plot_df['image_name'].apply(extract_magnification)
+        # If we should NOT combine labels (the default), make them unique
+        if not combine_labels:
+            # Create unique labels by adding order_index to ensure exact Excel order is preserved
+            plot_df['plot_label'] = plot_df.apply(
+                lambda row: f"{row['custom_label']}_{row['order_index']}",
+                axis=1
+            )
 
-    # Sort naturally by the display name (magnification)
-    import re
-    def natural_sort_key(s):
-        return [int(text) if text.isdigit() else text.lower() for text in re.split(r'(\d+)', s)]
+            # Create display labels without the order_index
+            plot_df['display_label'] = plot_df['custom_label']
 
-    # Get unique display names, naturally sorted
-    unique_display_names = sorted(plot_df['display_name'].unique(), key=natural_sort_key)
+            # Get the unique plot labels in order_index order
+            ordered_df = plot_df.sort_values('order_index')
+            unique_labels = ordered_df['plot_label'].unique().tolist()
 
-    # Create a categorical type with the sorted order
-    plot_df['display_name'] = pd.Categorical(
-        plot_df['display_name'],
-        categories=unique_display_names,
+            # Create label mapping for display
+            label_map = dict(zip(plot_df['plot_label'], plot_df['display_label']))
+        else:
+            # We want to combine identical labels
+            plot_df['plot_label'] = plot_df['custom_label']
+
+            # Get the unique labels in order_index order (keep first occurrence of each label)
+            ordered_df = plot_df.sort_values('order_index').drop_duplicates('custom_label')
+            unique_labels = ordered_df['plot_label'].unique().tolist()
+
+            # No special mapping needed since we're using the labels directly
+            label_map = None
+    else:
+        # No Excel labels, use image_name as fallback
+        if not combine_labels:
+            # Create unique labels based on image_name to prevent combining
+            plot_df['plot_label'] = plot_df.apply(
+                lambda row: f"{row['image_name']}_{row.name}",  # row.name is the DataFrame index
+                axis=1
+            )
+            plot_df['display_label'] = plot_df['image_name']
+
+            # Preserve the order labels appear in the dataframe
+            unique_labels = []
+            for idx, row in plot_df.iterrows():
+                if row['plot_label'] not in unique_labels:
+                    unique_labels.append(row['plot_label'])
+
+            # Create label mapping for display
+            label_map = dict(zip(plot_df['plot_label'], plot_df['display_label']))
+        else:
+            # Use image_name directly and combine identical names
+            plot_df['plot_label'] = plot_df['image_name']
+            unique_labels = plot_df['plot_label'].unique().tolist()
+            label_map = None
+
+    # Create categorical type to preserve order
+    plot_df['plot_label'] = pd.Categorical(
+        plot_df['plot_label'],
+        categories=unique_labels,
         ordered=True
     )
 
-    plt.figure(figsize=(12, 8))
+    # Create the figure
+    plt.figure(figsize=(14, 8))
 
-    # Create boxplot with simplified names
-    box = sns.boxplot(x='display_name', y='density', data=plot_df, palette='Set3')
+    # Create boxplot
+    box = sns.boxplot(x='plot_label', y='density', data=plot_df,
+                      palette='Set3', hue='plot_label', legend=False)
 
     # Add scatter points
-    sns.stripplot(x='display_name', y='density', data=plot_df,
+    sns.stripplot(x='plot_label', y='density', data=plot_df,
                  size=8, color='black', alpha=0.6)
 
     # Set y-axis to log scale
     plt.yscale('log')
 
+    # Replace x-tick labels if we have a label mapping
+    if label_map:
+        categories = plot_df['plot_label'].cat.categories
+        labels = [label_map.get(cat, str(cat)) for cat in categories]
+        box.set_xticklabels(labels)
+
     # Customize plot
     plt.title(title, fontsize=16)
-    plt.xlabel('Magnification', fontsize=14)
+    plt.xlabel('Sample', fontsize=14)
     plt.ylabel('Predicted Density (log scale)', fontsize=14)
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
@@ -305,6 +357,103 @@ def create_density_heatmap(image_name, predictions, grid_positions, grid_size, o
 
     return output_path
 
+# 6. Function to extract labels from CSV or Excel files in a subfolder - IMPROVED VERSION
+def extract_labels_from_file(subfolder_path):
+    """
+    Look for Excel or CSV files in a subfolder and extract labels.
+    Improved to avoid temporary Excel files and handle encoding issues.
+    If not found, return None and a warning will be shown.
+    """
+    # Check for Excel files first, being careful to exclude temporary Excel files (start with ~$)
+    excel_files = []
+    for ext in ["*.xlsx", "*.xls"]:
+        for file_path in Path(subfolder_path).glob(ext):
+            # Skip temporary Excel files that start with ~$
+            if not file_path.name.startswith("~$"):
+                excel_files.append(file_path)
+
+    # If Excel files found, try to read them
+    if excel_files:
+        try:
+            # Try importing openpyxl
+            try:
+                import openpyxl
+            except ImportError:
+                print("  Warning: Missing dependency 'openpyxl'. Install with: pip install openpyxl")
+                return None
+
+            selected_file = excel_files[0]
+            print(f"  Reading Excel file: {selected_file}")
+
+            # Try different Excel engines to handle potential file format issues
+            try:
+                # First try with default engine
+                df = pd.read_excel(selected_file, header=None)
+            except Exception as e1:
+                print(f"  First Excel reading attempt failed: {str(e1)}")
+                try:
+                    # Try with openpyxl engine explicitly
+                    df = pd.read_excel(selected_file, header=None, engine='openpyxl')
+                except Exception as e2:
+                    print(f"  Second Excel reading attempt failed: {str(e2)}")
+                    try:
+                        # Try with xlrd engine for older Excel formats
+                        df = pd.read_excel(selected_file, header=None, engine='xlrd')
+                    except Exception as e3:
+                        print(f"  All Excel reading attempts failed. Last error: {str(e3)}")
+                        return None
+
+            # Extract labels from the first column - PRESERVE EXACT ORDER
+            if df.shape[0] > 0:
+                labels = df.iloc[:, 0].tolist()
+                labels = [str(label).strip() for label in labels if pd.notna(label)]
+
+                # Debug info
+                print(f"  Successfully extracted {len(labels)} labels from Excel in original order: {labels}")
+
+                if labels:
+                    return labels
+            else:
+                print(f"  Excel file is empty or has no data in the first column")
+
+        except Exception as e:
+            print(f"  Error reading Excel file: {str(e)}")
+            import traceback
+            traceback.print_exc()
+    else:
+        print(f"  No valid Excel files found in {subfolder_path}")
+
+        # If no Excel files, try looking for a CSV file
+        csv_files = list(Path(subfolder_path).glob("*.csv"))
+        if csv_files:
+            try:
+                print(f"  Trying CSV file instead: {csv_files[0]}")
+                # Try different encodings for CSV
+                encodings = ['utf-8', 'latin1', 'cp1252', 'gb18030', 'big5']
+
+                for encoding in encodings:
+                    try:
+                        df = pd.read_csv(csv_files[0], header=None, encoding=encoding)
+
+                        # Extract labels from the first column - PRESERVE EXACT ORDER
+                        labels = df.iloc[:, 0].tolist()
+                        labels = [str(label).strip() for label in labels if pd.notna(label)]
+
+                        if labels:
+                            print(f"  Successfully read CSV with encoding {encoding}")
+                            print(f"  Labels from CSV in original order: {labels}")
+                            return labels
+                    except Exception as csv_error:
+                        continue
+
+                print("  Could not read CSV file with any encoding")
+            except Exception as e:
+                print(f"  Error reading CSV file: {str(e)}")
+
+    # If we get here, we couldn't find or read any Excel or CSV files
+    print("  No valid Excel or CSV files found with labels. Falling back to default behavior.")
+    return None
+
 # Main function
 def main():
     # Parse command line arguments
@@ -321,6 +470,12 @@ def main():
                         help='Size of the grid (e.g., 4 for a 4x4 grid)')
     parser.add_argument('--crop_size', type=int, default=512,
                         help='Size of each crop in pixels')
+    parser.add_argument('--create_heatmaps', action='store_true',
+                        help='Create heatmap visualizations for each image (default: False)')
+    parser.add_argument('--save_crops', action='store_true',
+                        help='Save cropped images (default: False)')
+    parser.add_argument('--combine_labels', action='store_true',
+                        help='Combine data points with identical labels (default: False)')
 
     args = parser.parse_args()
 
@@ -329,7 +484,10 @@ def main():
     results_dir = os.path.join(args.output_dir, f"pred_{timestamp}")
     crops_dir = os.path.join(args.crops_dir, f"crops_{timestamp}")
     os.makedirs(results_dir, exist_ok=True)
-    os.makedirs(crops_dir, exist_ok=True)
+
+    # Only create crops directory if save_crops is enabled
+    if args.save_crops:
+        os.makedirs(crops_dir, exist_ok=True)
 
     # Set up device
     device = torch.device("cuda" if torch.cuda.is_available() else
@@ -352,87 +510,242 @@ def main():
         transforms.Normalize(mean=[0.5], std=[0.5]),
     ])
 
-    # Find all images in input directory
-    image_extensions = ['.jpg', '.jpeg', '.png', '.tif', '.tiff']
-    image_paths = []
-    for ext in image_extensions:
-        image_paths.extend(list(Path(args.input_dir).glob(f"*{ext}")))
+    print(f"Combine identical labels: {args.combine_labels}")
 
-    print(f"Found {len(image_paths)} images to process")
+    # Get all subfolders in the input directory
+    input_path = Path(args.input_dir)
+    if input_path.is_dir():
+        subfolders = [d for d in input_path.iterdir() if d.is_dir()]
+        # If no subfolders, treat the input_dir itself as the only "subfolder"
+        if not subfolders:
+            subfolders = [input_path]
+    else:
+        print(f"Error: Input directory {args.input_dir} does not exist.")
+        return
 
-    # Process each image
-    all_results = []
-    for img_path in image_paths:
-        image_name = img_path.stem
-        print(f"\nProcessing image: {image_name}")
+    print(f"Found {len(subfolders)} subfolders/collections to process")
 
-        # Create subdirectory for this image's crops
-        image_crops_dir = os.path.join(crops_dir, image_name)
-        os.makedirs(image_crops_dir, exist_ok=True)
+    # Initialize a dictionary to store results by subfolder
+    all_results_by_subfolder = {}
 
-        # Crop the image into grid cells
-        crop_paths, crop_positions, viz_path = crop_center_grid(
-            str(img_path), image_crops_dir, args.grid_size, args.crop_size, True
+    # Process each subfolder
+    for subfolder in subfolders:
+        subfolder_name = subfolder.name
+        print(f"\nProcessing subfolder: {subfolder_name}")
+
+        # Create subdirectories for this subfolder's results and crops
+        subfolder_results_dir = os.path.join(results_dir, subfolder_name)
+        subfolder_crops_dir = os.path.join(crops_dir, subfolder_name)
+        os.makedirs(subfolder_results_dir, exist_ok=True)
+        os.makedirs(subfolder_crops_dir, exist_ok=True)
+
+        # Find all images in this subfolder - use os.walk to handle Chinese characters better
+        image_extensions = ['.jpg', '.jpeg', '.png', '.tif', '.tiff']
+        image_paths = []
+
+        # Use os.walk which handles non-ASCII characters better than Path.glob in some environments
+        for root, dirs, files in os.walk(str(subfolder)):
+            for file in files:
+                file_lower = file.lower()
+                if any(file_lower.endswith(ext) for ext in image_extensions):
+                    image_paths.append(os.path.join(root, file))
+
+        # Convert to Path objects
+        image_paths = [Path(p) for p in image_paths]
+
+        print(f"  Found {len(image_paths)} images to process in {subfolder_name}")
+
+        if not image_paths:
+            print(f"  No images found in {subfolder_name}, skipping.")
+            continue
+
+        # Sort the image paths first to ensure consistent order
+        # We sort by the stem (filename without extension)
+        image_paths = sorted(image_paths, key=lambda x: x.stem)
+
+        print(f"  Sorted image order: {[path.stem for path in image_paths]}")
+
+        # Initialize results list for this subfolder
+        subfolder_results = []
+
+        # Process each image in the subfolder in sorted order
+        for img_path in image_paths:
+            image_name = img_path.stem
+            print(f"  Processing image: {image_name}")
+
+            # Create subdirectory for this image's crops if save_crops is enabled
+            image_crops_dir = None
+            if args.save_crops:
+                image_crops_dir = os.path.join(subfolder_crops_dir, image_name)
+                os.makedirs(image_crops_dir, exist_ok=True)
+            else:
+                # Create a temporary directory for crops if not saving them
+                image_crops_dir = os.path.join(tempfile.gettempdir(), f"temp_crops_{timestamp}_{image_name}")
+                os.makedirs(image_crops_dir, exist_ok=True)
+
+            # Crop the image into grid cells
+            crop_paths, crop_positions, viz_path = crop_center_grid(
+                str(img_path), image_crops_dir, args.grid_size, args.crop_size, args.save_crops
+            )
+
+            print(f"    Created {len(crop_paths)} crops")
+
+            # Predict density for each crop
+            predictions = []
+            valid_positions = []
+            for crop_path, position in zip(crop_paths, crop_positions):
+                density = predict_density(model, crop_path, transform, device)
+                if density is not None:
+                    predictions.append(density)
+                    valid_positions.append(position)
+                    print(f"    Crop at position {position}: Predicted density = {density:.2f}")
+
+                    # Add to results
+                    subfolder_results.append({
+                        'subfolder': subfolder_name,
+                        'image_name': image_name,
+                        'crop_name': os.path.basename(crop_path),
+                        'row': position[0],
+                        'col': position[1],
+                        'density': density
+                    })
+
+            # Create heatmap visualization if enabled
+            if args.create_heatmaps and predictions:
+                heatmap_path = os.path.join(subfolder_results_dir, f"{image_name}_density_heatmap.png")
+                create_density_heatmap(image_name, predictions, valid_positions,
+                                     args.grid_size, heatmap_path)
+                print(f"    Created heatmap at {heatmap_path}")
+
+            # Clean up temporary crop directory if not saving crops
+            if not args.save_crops:
+                try:
+                    import shutil
+                    shutil.rmtree(image_crops_dir)
+                except:
+                    pass
+
+        # Convert results to dataframe for this subfolder
+        if subfolder_results:
+            subfolder_df = pd.DataFrame(subfolder_results)
+            all_results_by_subfolder[subfolder_name] = subfolder_df
+
+            # Calculate summary statistics for this subfolder
+            summary_df = subfolder_df.groupby('image_name').agg(
+                mean_density=('density', 'mean'),
+                median_density=('density', 'median'),
+                std_density=('density', 'std'),
+                min_density=('density', 'min'),
+                max_density=('density', 'max'),
+                crop_count=('density', 'count')
+            ).reset_index()
+
+            # Save results to CSV for this subfolder
+            results_path = os.path.join(subfolder_results_dir, f"{subfolder_name}_predictions.csv")
+            summary_path = os.path.join(subfolder_results_dir, f"{subfolder_name}_summary.csv")
+            subfolder_df.to_csv(results_path, index=False)
+            summary_df.to_csv(summary_path, index=False)
+
+            print(f"  Saved predictions to {results_path}")
+            print(f"  Saved summary to {summary_path}")
+
+            # Try to extract labels from any CSV/Excel files in the subfolder
+            custom_labels = extract_labels_from_file(subfolder)
+
+            # Create boxplot with scatter points for this subfolder
+            boxplot_path = os.path.join(subfolder_results_dir, f"{subfolder_name}_density_boxplot.png")
+
+            # Debug information about image names and labels
+            image_names = subfolder_df['image_name'].unique()
+            print(f"  Image names found: {image_names}")
+            print(f"  Custom labels found: {custom_labels}")
+
+            # Prepare data for boxplot
+            boxplot_df = subfolder_df.copy()
+
+            # Attempt to match filenames with labels
+            if custom_labels:
+                try:
+                    # Sort the image names to ensure consistent order
+                    sorted_image_names = sorted(list(image_names))
+                    print(f"  Sorted image names: {sorted_image_names}")
+
+                    # Map image names to custom labels if possible
+                    if len(custom_labels) >= len(sorted_image_names):
+                        # Map each sorted image name to corresponding label from Excel in order
+                        label_map = {name: f"{label}" for name, label in
+                                    zip(sorted_image_names, custom_labels[:len(sorted_image_names)])}
+
+                        print(f"  Created label mapping: {label_map}")
+
+                        # Add labels to dataframe
+                        boxplot_df['custom_label'] = boxplot_df['image_name'].map(label_map)
+
+                        # Create order_index that EXACTLY matches Excel position
+                        excel_order = {label: i for i, label in enumerate(custom_labels)}
+                        boxplot_df['order_index'] = boxplot_df['custom_label'].map(excel_order)
+
+                        # Print the exact order from Excel for verification
+                        print(f"  Excel label order: {custom_labels[:len(sorted_image_names)]}")
+                    else:
+                        # Not enough labels, use default
+                        print(f"  Not enough labels ({len(custom_labels)}) for all images ({len(sorted_image_names)})")
+                        # We'll fallback to using image names without labels
+                except Exception as e:
+                    print(f"  Error matching labels to images: {str(e)}")
+                    import traceback
+                    traceback.print_exc()
+
+            # Create boxplot with the simplified function
+            create_boxplot_with_scatter(
+                boxplot_df,
+                boxplot_path,
+                f"Microbead Density Distribution - {subfolder_name}",
+                args.combine_labels
+            )
+
+            print(f"  Created boxplot visualization at {boxplot_path}")
+
+    # Combine all results into a single dataframe
+    all_results = pd.concat(all_results_by_subfolder.values()) if all_results_by_subfolder else pd.DataFrame()
+
+    if not all_results.empty:
+        # Save combined results
+        combined_results_path = os.path.join(results_dir, "all_predictions.csv")
+        all_results.to_csv(combined_results_path, index=False)
+
+        # Calculate summary statistics across all images and subfolders
+        combined_summary_df = all_results.groupby(['subfolder', 'image_name']).agg(
+            mean_density=('density', 'mean'),
+            median_density=('density', 'median'),
+            std_density=('density', 'std'),
+            min_density=('density', 'min'),
+            max_density=('density', 'max'),
+            crop_count=('density', 'count')
+        ).reset_index()
+
+        combined_summary_path = os.path.join(results_dir, "summary_statistics.csv")
+        combined_summary_df.to_csv(combined_summary_path, index=False)
+
+        print(f"\nSaved all predictions to {combined_results_path}")
+        print(f"Saved summary statistics to {combined_summary_path}")
+
+        # Create a combined boxplot with subfolder grouping using the simplified function
+        combined_boxplot_path = os.path.join(results_dir, "combined_density_boxplot.png")
+        create_boxplot_with_scatter(
+            all_results,
+            combined_boxplot_path,
+            "Microbead Density Distribution - All Samples",
+            args.combine_labels
         )
 
-        print(f"Created {len(crop_paths)} crops")
+        print(f"Created combined visualization at {combined_boxplot_path}")
 
-        # Predict density for each crop
-        predictions = []
-        valid_positions = []
-        for crop_path, position in zip(crop_paths, crop_positions):
-            density = predict_density(model, crop_path, transform, device)
-            if density is not None:
-                predictions.append(density)
-                valid_positions.append(position)
-                print(f"  Crop at position {position}: Predicted density = {density:.2f}")
-
-                # Add to results
-                all_results.append({
-                    'image_name': image_name,
-                    'crop_name': os.path.basename(crop_path),
-                    'row': position[0],
-                    'col': position[1],
-                    'density': density
-                })
-
-        # Create heatmap visualization
-        heatmap_path = os.path.join(results_dir, f"{image_name}_density_heatmap.png")
-        create_density_heatmap(image_name, predictions, valid_positions,
-                              args.grid_size, heatmap_path)
-
-    # Convert results to dataframe
-    results_df = pd.DataFrame(all_results)
-
-    # Calculate summary statistics for each image
-    summary_df = results_df.groupby('image_name').agg(
-        mean_density=('density', 'mean'),
-        median_density=('density', 'median'),
-        std_density=('density', 'std'),
-        min_density=('density', 'min'),
-        max_density=('density', 'max'),
-        crop_count=('density', 'count')
-    ).reset_index()
-
-    # Save results to CSV
-    results_path = os.path.join(results_dir, "all_predictions.csv")
-    summary_path = os.path.join(results_dir, "summary_statistics.csv")
-    results_df.to_csv(results_path, index=False)
-    summary_df.to_csv(summary_path, index=False)
-
-    print(f"\nSaved all predictions to {results_path}")
-    print(f"Saved summary statistics to {summary_path}")
-
-    # Create boxplot with scatter points
-    boxplot_path = os.path.join(results_dir, "density_boxplot.png")
-    create_boxplot_with_scatter(results_df, boxplot_path,
-                               "Microbead Density Distribution by Image")
-
-    print(f"Created visualization at {boxplot_path}")
-
-    # Calculate average density across all images
-    avg_density = results_df['density'].mean()
-    print(f"\nAverage predicted density across all images: {avg_density:.2f}")
+        # Calculate average density across all images
+        avg_density = all_results['density'].mean()
+        print(f"\nAverage predicted density across all images: {avg_density:.2f}")
+    else:
+        print("\nNo results were generated. Check your input directory and image files.")
 
     # Save configuration
     config = {
@@ -440,9 +753,13 @@ def main():
         'filter_config': filter_config,
         'grid_size': args.grid_size,
         'crop_size': args.crop_size,
-        'image_count': len(image_paths),
+        'input_dir': args.input_dir,
+        'subfolder_count': len(subfolders),
+        'create_heatmaps': args.create_heatmaps,
+        'save_crops': args.save_crops,
+        'combine_labels': args.combine_labels,
         'timestamp': timestamp,
-        'average_density': float(avg_density)
+        'average_density': float(avg_density) if 'avg_density' in locals() else None
     }
 
     with open(os.path.join(results_dir, "prediction_config.json"), 'w') as f:
