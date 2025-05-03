@@ -14,6 +14,14 @@ import seaborn as sns
 from pathlib import Path
 import json
 from datetime import datetime
+try:
+    from natsort import natsorted
+    NATSORT_AVAILABLE = True
+except ImportError:
+    NATSORT_AVAILABLE = False
+    print("natsort not available. Install with: pip install natsort")
+    print("Using basic natural sorting as fallback.")
+    import re
 
 # 1. Define the CNN model - must match the architecture used for training
 class DensityRegressionCNN(nn.Module):
@@ -57,7 +65,35 @@ class DensityRegressionCNN(nn.Module):
         x = self.fc2(x)
         return x
 
-# 2. Function to crop images in a grid pattern (copied from cropImg_center.py)
+# Natural sorting helper function
+def natural_sort_key(s):
+    """Create a key for natural sorting (e.g., 2X comes before 10X)"""
+    # Convert string to list of integers and strings
+    return [int(text) if text.isdigit() else text.lower()
+            for text in re.split('([0-9]+)', str(s))]
+
+# Natural sorting wrapper - uses natsort if available, fallback otherwise
+def natural_sort(items, key_func=None):
+    """
+    Perform natural sorting on a list of items.
+    Uses natsort library if available, otherwise falls back to custom implementation.
+    """
+    if NATSORT_AVAILABLE:
+        if key_func:
+            # For complex objects, extract the sorting key first
+            keys = [key_func(item) for item in items]
+            return [items[i] for i in natsorted(range(len(items)), key=lambda i: keys[i])]
+        else:
+            # For simple strings/values
+            return natsorted(items)
+    else:
+        # Fallback to custom implementation
+        if key_func:
+            return sorted(items, key=lambda x: natural_sort_key(key_func(x)))
+        else:
+            return sorted(items, key=natural_sort_key)
+
+# 2. Function to crop images in a grid pattern
 def crop_center_grid(image_path, output_folder, grid_size=4, crop_size=512, visualize=True):
     """
     Creates a grid of crops from the center of the image, excluding the 4 corner cells.
@@ -171,7 +207,7 @@ def crop_center_grid(image_path, output_folder, grid_size=4, crop_size=512, visu
         # Save visualization image
         viz_name = f"{base_name}_grid_visualization.jpg"
         viz_path = os.path.join(output_folder, viz_name)
-        cv2.imwrite(viz_path, viz_img)
+        cv2.imwrite(viz_img, viz_path)
         print(f"    Created visualization image: {viz_path}")
 
     return crop_paths, crop_info, viz_path
@@ -196,8 +232,7 @@ def predict_density(model, image_path, transform, device):
     except Exception as e:
         print(f"Error predicting for image {image_path}: {str(e)}")
         return None
-
-# 4. NEW DIRECT BOXPLOT FUNCTION - Creates boxplots with exact Excel order
+    # 4. NEW DIRECT BOXPLOT FUNCTION - Creates boxplots with exact Excel order
 def create_direct_boxplot(results_df, output_path, title, custom_labels):
     """
     Create boxplots with scatter points that directly follow the exact Excel order.
@@ -214,12 +249,14 @@ def create_direct_boxplot(results_df, output_path, title, custom_labels):
 
     # Get unique image names
     image_names = results_df['image_name'].unique()
-    sorted_image_names = sorted(image_names)
+
+    # Natural sort the image names
+    image_names = natural_sort(image_names)
 
     # Step 1: Create a map of image names to their corresponding label
     # Use custom_labels in their EXACT original order
     image_label_map = {}
-    for i, image_name in enumerate(sorted_image_names):
+    for i, image_name in enumerate(image_names):
         if i < len(custom_labels):
             image_label_map[image_name] = custom_labels[i]
 
@@ -616,7 +653,6 @@ def extract_labels_from_file(subfolder_path):
     # If we get here, we couldn't find or read any Excel or CSV files
     print("  No valid Excel or CSV files found with labels. Falling back to default behavior.")
     return None
-
 # Main function
 def main():
     # Parse command line arguments
@@ -724,11 +760,10 @@ def main():
             print(f"  No images found in {subfolder_name}, skipping.")
             continue
 
-        # Sort the image paths first to ensure consistent order
-        # We sort by the stem (filename without extension)
-        image_paths = sorted(image_paths, key=lambda x: x.stem)
+        # Sort the image paths with natural sorting
+        image_paths = natural_sort(image_paths, key_func=lambda x: x.stem)
 
-        print(f"  Sorted image order: {[path.stem for path in image_paths]}")
+        print(f"  Sorted image order (natural): {[path.stem for path in image_paths]}")
 
         # Initialize results list for this subfolder
         subfolder_results = []
@@ -821,8 +856,8 @@ def main():
             boxplot_path = os.path.join(subfolder_results_dir, f"{subfolder_name}_density_boxplot.png")
 
             # Debug information about image names and labels
-            image_names = subfolder_df['image_name'].unique()
-            print(f"  Image names found: {image_names}")
+            image_names = natural_sort(subfolder_df['image_name'].unique())
+            print(f"  Image names found (natural sorted): {image_names}")
             print(f"  Custom labels found: {custom_labels}")
 
             # If we have valid custom labels from Excel, use the direct boxplot function
