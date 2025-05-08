@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 # Load the experiment comparison data from the specified directory
-csv_path = os.path.join('run_20250415_123748', 'experiment_comparison.csv')
+csv_path = os.path.join('dataset', 'run_20250502_180544', 'experiment_comparison.csv')
 df = pd.read_csv(csv_path)
 
 # Display the results table sorted by MSE (best to worst)
@@ -29,7 +29,7 @@ plt.yscale('log')
 plt.xlabel('Model Configuration')
 plt.ylabel('Error Metrics')
 plt.title('Error Metrics by Model Configuration')
-plt.xticks(index, labels, rotation=90)
+plt.xticks(index, labels, rotation=45)
 plt.legend()
 plt.grid(axis='y', linestyle='--', alpha=0.7)
 
