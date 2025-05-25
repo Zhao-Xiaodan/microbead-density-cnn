@@ -18,6 +18,8 @@ from datetime import datetime
 
 # Create argument parser for configuration options
 parser = argparse.ArgumentParser(description='Train a CNN for microbead density regression')
+parser.add_argument('--input_dir', type=str, default='dataset',
+                    help='Input directory containing images/ and density.csv (default: dataset)')
 parser.add_argument('--batch_sizes', nargs='+', type=int, default=[16, 32, 64],
                     help='Batch sizes to experiment with')
 parser.add_argument('--filter_configs', nargs='+', type=str,
@@ -384,10 +386,23 @@ def evaluate_model(model, test_loader, config, device):
 
 # Main Execution
 if __name__ == "__main__":
-    # Set paths
+    # Set paths using the configurable input directory
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    image_dir = os.path.join(base_dir, 'dataset', 'images')
-    density_file = os.path.join(base_dir, 'dataset', 'density.csv')
+    input_path = os.path.join(base_dir, args.input_dir)
+    image_dir = os.path.join(input_path, 'images')
+    density_file = os.path.join(input_path, 'density.csv')
+
+    # Validate that the input directory and files exist
+    if not os.path.exists(input_path):
+        raise FileNotFoundError(f"Input directory does not exist: {input_path}")
+    if not os.path.exists(image_dir):
+        raise FileNotFoundError(f"Images directory does not exist: {image_dir}")
+    if not os.path.exists(density_file):
+        raise FileNotFoundError(f"Density CSV file does not exist: {density_file}")
+
+    print(f"Using input directory: {input_path}")
+    print(f"Images directory: {image_dir}")
+    print(f"Density file: {density_file}")
 
     # Create timestamp for unique output directory
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -396,6 +411,7 @@ if __name__ == "__main__":
 
     # Save configuration parameters
     config_summary = {
+        'input_dir': args.input_dir,
         'batch_sizes': args.batch_sizes,
         'filter_configs': args.filter_configs,
         'epochs': args.epochs,

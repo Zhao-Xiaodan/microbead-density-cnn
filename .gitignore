@@ -13,9 +13,6 @@
 # But keep specific CSV file
 !dataset/density.csv
 
-# Ignore most model files but keep the best one
-/model/*
-!/model/best_model_batch32_filters128-256-512.pth
 
 # Ignore large datasets and results
 /original_images/

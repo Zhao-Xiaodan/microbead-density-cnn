@@ -1,5 +1,5 @@
 
-name: microbead-cnn
+name: densityCNN
 channels:
   - apple
   - pytorch
@@ -21,6 +21,8 @@ dependencies:
   - openpyxl  # For reading/writing Excel .xlsx files
   - xlrd  # For reading older Excel .xls files
   - pytest  # Useful for testing
+  - natsort
+  - scikit-image
   - pip:
     - tqdm
     - pathlib
