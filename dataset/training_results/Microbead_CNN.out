@@ -1,0 +1,1530 @@
+
+Inactive Modules:
+  1) anaconda/3
+
+Job started on Fri May 16 21:13:50 +08 2025
+Running on node: popiah-pbs
+Using GPU: Tesla P100-PCIE-16GB
+Python executable: /mnt/mbi/home/phyzxi/.conda/envs/microbead-cnn/bin/python
+/mnt/mbi/home/phyzxi/.conda/envs/microbead-cnn/lib/python3.9/site-packages/torch/cuda/__init__.py:129: UserWarning: CUDA initialization: The NVIDIA driver on your system is too old (found version 11000). Please update your GPU driver by downloading and installing a new version from the URL: http://www.nvidia.com/Download/index.aspx Alternatively, go to: https://pytorch.org to install a PyTorch version that has been compiled with your version of the CUDA driver. (Triggered internally at /pytorch/c10/cuda/CUDAFunctions.cpp:109.)
+  return torch._C._cuda_getDeviceCount() > 0
+Using device: cpu
+Loaded 1120 image-density pairs from CSV
+Loaded 1120 image-density pairs from CSV
+Dataset split: 784 training, 168 validation, 168 test samples
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 16, Filters = [32, 64, 128]
+================================================================================
+
+Model initialized with filters: [32, 64, 128]
+
+Starting training...
+Epoch 1/60, Train Loss: 116757265.4929, Val Loss: 16624247.7214
+New best model saved with validation loss: 16624247.7214
+Epoch 2/60, Train Loss: 116256545.5000, Val Loss: 16385643.1000
+New best model saved with validation loss: 16385643.1000
+Epoch 3/60, Train Loss: 114981479.1929, Val Loss: 16046228.9857
+New best model saved with validation loss: 16046228.9857
+Epoch 4/60, Train Loss: 113025500.3571, Val Loss: 15624282.7679
+New best model saved with validation loss: 15624282.7679
+Epoch 5/60, Train Loss: 109720911.1179, Val Loss: 14437383.1000
+New best model saved with validation loss: 14437383.1000
+Epoch 6/60, Train Loss: 105528452.9107, Val Loss: 14469376.6643
+No improvement for 1 epochs
+Epoch 7/60, Train Loss: 100877416.5571, Val Loss: 12654515.9000
+New best model saved with validation loss: 12654515.9000
+Epoch 8/60, Train Loss: 95240177.9911, Val Loss: 12951408.8554
+No improvement for 1 epochs
+Epoch 9/60, Train Loss: 87446097.8696, Val Loss: 10250062.1214
+New best model saved with validation loss: 10250062.1214
+Epoch 10/60, Train Loss: 82645761.6018, Val Loss: 13295573.4500
+No improvement for 1 epochs
+Epoch 11/60, Train Loss: 77062959.7143, Val Loss: 8517642.6786
+New best model saved with validation loss: 8517642.6786
+Epoch 12/60, Train Loss: 74081396.4000, Val Loss: 7254881.9688
+New best model saved with validation loss: 7254881.9688
+Epoch 13/60, Train Loss: 69396392.5750, Val Loss: 6220284.3429
+New best model saved with validation loss: 6220284.3429
+Epoch 14/60, Train Loss: 66629330.4929, Val Loss: 8147954.1143
+No improvement for 1 epochs
+Epoch 15/60, Train Loss: 63174364.5429, Val Loss: 6325248.7750
+No improvement for 2 epochs
+Epoch 16/60, Train Loss: 62101318.3964, Val Loss: 11396662.5429
+No improvement for 3 epochs
+Epoch 17/60, Train Loss: 61373409.8393, Val Loss: 4718567.4286
+New best model saved with validation loss: 4718567.4286
+Epoch 18/60, Train Loss: 60880382.0714, Val Loss: 6384558.5875
+No improvement for 1 epochs
+Epoch 19/60, Train Loss: 56283691.2857, Val Loss: 7909606.0571
+No improvement for 2 epochs
+Epoch 20/60, Train Loss: 61838076.7857, Val Loss: 8397921.4286
+No improvement for 3 epochs
+Epoch 21/60, Train Loss: 60108717.3571, Val Loss: 21070276.2286
+No improvement for 4 epochs
+Epoch 22/60, Train Loss: 59642270.9786, Val Loss: 5958376.9679
+No improvement for 5 epochs
+Epoch 23/60, Train Loss: 56138648.7750, Val Loss: 29776061.2571
+No improvement for 6 epochs
+Epoch 24/60, Train Loss: 54243634.6607, Val Loss: 11533848.8857
+No improvement for 7 epochs
+Epoch 25/60, Train Loss: 59477912.4429, Val Loss: 3813669.3214
+New best model saved with validation loss: 3813669.3214
+Epoch 26/60, Train Loss: 51707499.3857, Val Loss: 22230353.3714
+No improvement for 1 epochs
+Epoch 27/60, Train Loss: 56296492.1643, Val Loss: 96391520.4571
+No improvement for 2 epochs
+Epoch 28/60, Train Loss: 53536715.7000, Val Loss: 10943868.3786
+No improvement for 3 epochs
+Epoch 29/60, Train Loss: 57587453.4929, Val Loss: 4995333.6857
+No improvement for 4 epochs
+Epoch 30/60, Train Loss: 52890104.6143, Val Loss: 61407924.3429
+No improvement for 5 epochs
+Epoch 31/60, Train Loss: 53792341.9214, Val Loss: 6310895.9250
+No improvement for 6 epochs
+Epoch 32/60, Train Loss: 53344887.0786, Val Loss: 6738800.7929
+No improvement for 7 epochs
+Epoch 33/60, Train Loss: 51830151.1143, Val Loss: 5432263.7054
+No improvement for 8 epochs
+Epoch 34/60, Train Loss: 51745086.8857, Val Loss: 41647302.4000
+No improvement for 9 epochs
+Epoch 35/60, Train Loss: 48115459.8857, Val Loss: 14459619.8286
+No improvement for 10 epochs
+Epoch 36/60, Train Loss: 52765121.6000, Val Loss: 8982754.0107
+No improvement for 11 epochs
+Epoch 37/60, Train Loss: 52115305.4857, Val Loss: 2544900.0214
+New best model saved with validation loss: 2544900.0214
+Epoch 38/60, Train Loss: 51409998.9000, Val Loss: 8010296.5143
+No improvement for 1 epochs
+Epoch 39/60, Train Loss: 50174940.3357, Val Loss: 3667144.5214
+No improvement for 2 epochs
+Epoch 40/60, Train Loss: 51960415.7857, Val Loss: 6477339.1357
+No improvement for 3 epochs
+Epoch 41/60, Train Loss: 49927031.1214, Val Loss: 3087120.0857
+No improvement for 4 epochs
+Epoch 42/60, Train Loss: 51094238.4000, Val Loss: 3900583.8357
+No improvement for 5 epochs
+Epoch 43/60, Train Loss: 51237933.6429, Val Loss: 22270720.5714
+No improvement for 6 epochs
+Epoch 44/60, Train Loss: 45398163.9929, Val Loss: 378670943.0857
+No improvement for 7 epochs
+Epoch 45/60, Train Loss: 46761385.3107, Val Loss: 5522908.5429
+No improvement for 8 epochs
+Epoch 46/60, Train Loss: 49230294.7214, Val Loss: 4697923.9143
+No improvement for 9 epochs
+Epoch 47/60, Train Loss: 47567115.5857, Val Loss: 4592842.9571
+No improvement for 10 epochs
+Epoch 48/60, Train Loss: 54476996.6357, Val Loss: 4202893.6482
+No improvement for 11 epochs
+Epoch 49/60, Train Loss: 45245101.1000, Val Loss: 26853816.4571
+No improvement for 12 epochs
+Epoch 50/60, Train Loss: 46995739.3429, Val Loss: 7230273.6000
+No improvement for 13 epochs
+Epoch 51/60, Train Loss: 46798961.6250, Val Loss: 10049932.4286
+No improvement for 14 epochs
+Epoch 52/60, Train Loss: 43965839.3286, Val Loss: 4519475.7321
+No improvement for 15 epochs
+Early stopping triggered after 52 epochs
+Training completed in 16.43 minutes
+Best validation loss: 2544900.0214
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 16, Filters: [32, 64, 128]):
+Mean Squared Error: 1796122880.0000
+Mean Absolute Error: 25354.4785
+R² Score: -10.9698
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 16, Filters = [16, 32, 64]
+================================================================================
+
+Model initialized with filters: [16, 32, 64]
+
+Starting training...
+Epoch 1/60, Train Loss: 116809931.1107, Val Loss: 16631643.8143
+New best model saved with validation loss: 16631643.8143
+Epoch 2/60, Train Loss: 116571917.8929, Val Loss: 16565289.2464
+New best model saved with validation loss: 16565289.2464
+Epoch 3/60, Train Loss: 116003088.3286, Val Loss: 16394853.3143
+New best model saved with validation loss: 16394853.3143
+Epoch 4/60, Train Loss: 114967552.5071, Val Loss: 16109804.5643
+New best model saved with validation loss: 16109804.5643
+Epoch 5/60, Train Loss: 113452420.9857, Val Loss: 16065061.3357
+New best model saved with validation loss: 16065061.3357
+Epoch 6/60, Train Loss: 111685073.9536, Val Loss: 15978169.1500
+New best model saved with validation loss: 15978169.1500
+Epoch 7/60, Train Loss: 108332849.2732, Val Loss: 15307556.7571
+New best model saved with validation loss: 15307556.7571
+Epoch 8/60, Train Loss: 105465223.6804, Val Loss: 13907647.4571
+New best model saved with validation loss: 13907647.4571
+Epoch 9/60, Train Loss: 100945814.1768, Val Loss: 13066055.1750
+New best model saved with validation loss: 13066055.1750
+Epoch 10/60, Train Loss: 96945611.5357, Val Loss: 12281597.7857
+New best model saved with validation loss: 12281597.7857
+Epoch 11/60, Train Loss: 91341041.8250, Val Loss: 10887440.5500
+New best model saved with validation loss: 10887440.5500
+Epoch 12/60, Train Loss: 88297734.7241, Val Loss: 11428421.8357
+No improvement for 1 epochs
+Epoch 13/60, Train Loss: 85253661.5429, Val Loss: 11495370.0786
+No improvement for 2 epochs
+Epoch 14/60, Train Loss: 80442968.0839, Val Loss: 8121582.8071
+New best model saved with validation loss: 8121582.8071
+Epoch 15/60, Train Loss: 78616885.0000, Val Loss: 6309877.7500
+New best model saved with validation loss: 6309877.7500
+Epoch 16/60, Train Loss: 72614410.8000, Val Loss: 9385602.5143
+No improvement for 1 epochs
+Epoch 17/60, Train Loss: 73449041.0000, Val Loss: 36520979.7714
+No improvement for 2 epochs
+Epoch 18/60, Train Loss: 66073390.6929, Val Loss: 7477474.9071
+No improvement for 3 epochs
+Epoch 19/60, Train Loss: 66516402.0214, Val Loss: 8360441.9286
+No improvement for 4 epochs
+Epoch 20/60, Train Loss: 60188802.0214, Val Loss: 6799918.1714
+No improvement for 5 epochs
+Epoch 21/60, Train Loss: 58836991.1571, Val Loss: 4055767.1571
+New best model saved with validation loss: 4055767.1571
+Epoch 22/60, Train Loss: 62007080.3893, Val Loss: 11813675.8857
+No improvement for 1 epochs
+Epoch 23/60, Train Loss: 58769690.7786, Val Loss: 6337797.6714
+No improvement for 2 epochs
+Epoch 24/60, Train Loss: 54939428.9786, Val Loss: 5445786.6357
+No improvement for 3 epochs
+Epoch 25/60, Train Loss: 57690502.4250, Val Loss: 10700537.9714
+No improvement for 4 epochs
+Epoch 26/60, Train Loss: 56577879.0214, Val Loss: 67815109.0286
+No improvement for 5 epochs
+Epoch 27/60, Train Loss: 59714912.3857, Val Loss: 5314289.8357
+No improvement for 6 epochs
+Epoch 28/60, Train Loss: 54505550.7357, Val Loss: 47786500.5714
+No improvement for 7 epochs
+Epoch 29/60, Train Loss: 58095418.9429, Val Loss: 8079443.6643
+No improvement for 8 epochs
+Epoch 30/60, Train Loss: 54849802.1000, Val Loss: 3077202.6786
+New best model saved with validation loss: 3077202.6786
+Epoch 31/60, Train Loss: 54329326.7357, Val Loss: 15939378.8000
+No improvement for 1 epochs
+Epoch 32/60, Train Loss: 56645966.8000, Val Loss: 4458493.5054
+No improvement for 2 epochs
+Epoch 33/60, Train Loss: 57385076.3214, Val Loss: 8044224.7679
+No improvement for 3 epochs
+Epoch 34/60, Train Loss: 55240501.0786, Val Loss: 6573849.1000
+No improvement for 4 epochs
+Epoch 35/60, Train Loss: 53809734.2000, Val Loss: 5058622.1857
+No improvement for 5 epochs
+Epoch 36/60, Train Loss: 47697943.6857, Val Loss: 4917193.1571
+No improvement for 6 epochs
+Epoch 37/60, Train Loss: 52395971.9214, Val Loss: 5722328.6000
+No improvement for 7 epochs
+Epoch 38/60, Train Loss: 51349918.0571, Val Loss: 12043398.4571
+No improvement for 8 epochs
+Epoch 39/60, Train Loss: 51507033.9214, Val Loss: 7339538.7429
+No improvement for 9 epochs
+Epoch 40/60, Train Loss: 48883104.9929, Val Loss: 4667255.3839
+No improvement for 10 epochs
+Epoch 41/60, Train Loss: 50150450.9571, Val Loss: 4168223.3643
+No improvement for 11 epochs
+Epoch 42/60, Train Loss: 56106007.4857, Val Loss: 2614789.9357
+New best model saved with validation loss: 2614789.9357
+Epoch 43/60, Train Loss: 46914664.0429, Val Loss: 6328434.8357
+No improvement for 1 epochs
+Epoch 44/60, Train Loss: 49122906.8786, Val Loss: 2862533.5571
+No improvement for 2 epochs
+Epoch 45/60, Train Loss: 52174621.1929, Val Loss: 32002611.8857
+No improvement for 3 epochs
+Epoch 46/60, Train Loss: 49309939.2071, Val Loss: 18879428.8571
+No improvement for 4 epochs
+Epoch 47/60, Train Loss: 51388939.6857, Val Loss: 5942211.3429
+No improvement for 5 epochs
+Epoch 48/60, Train Loss: 49144604.5571, Val Loss: 4089352.7000
+No improvement for 6 epochs
+Epoch 49/60, Train Loss: 51801605.6071, Val Loss: 5968147.7500
+No improvement for 7 epochs
+Epoch 50/60, Train Loss: 47914807.8643, Val Loss: 10809197.3143
+No improvement for 8 epochs
+Epoch 51/60, Train Loss: 53863567.8143, Val Loss: 6592198.5000
+No improvement for 9 epochs
+Epoch 52/60, Train Loss: 48706990.9857, Val Loss: 4089482.6000
+No improvement for 10 epochs
+Epoch 53/60, Train Loss: 51746652.0214, Val Loss: 3666833.0429
+No improvement for 11 epochs
+Epoch 54/60, Train Loss: 47634065.0571, Val Loss: 4444410.7071
+No improvement for 12 epochs
+Epoch 55/60, Train Loss: 47193496.0643, Val Loss: 5183393.8857
+No improvement for 13 epochs
+Epoch 56/60, Train Loss: 49680135.7857, Val Loss: 3328224.9321
+No improvement for 14 epochs
+Epoch 57/60, Train Loss: 47822552.9000, Val Loss: 3406163.3000
+No improvement for 15 epochs
+Early stopping triggered after 57 epochs
+Training completed in 11.43 minutes
+Best validation loss: 2614789.9357
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 16, Filters: [16, 32, 64]):
+Mean Squared Error: 12481363968.0000
+Mean Absolute Error: 91151.1328
+R² Score: -82.1791
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 16, Filters = [64, 128, 256]
+================================================================================
+
+Model initialized with filters: [64, 128, 256]
+
+Starting training...
+Epoch 1/60, Train Loss: 116686559.8357, Val Loss: 16620874.0500
+New best model saved with validation loss: 16620874.0500
+Epoch 2/60, Train Loss: 115692128.2750, Val Loss: 16232690.3714
+New best model saved with validation loss: 16232690.3714
+Epoch 3/60, Train Loss: 113712784.5679, Val Loss: 16072633.8500
+New best model saved with validation loss: 16072633.8500
+Epoch 4/60, Train Loss: 111032703.3071, Val Loss: 14933522.4429
+New best model saved with validation loss: 14933522.4429
+Epoch 5/60, Train Loss: 106405282.0554, Val Loss: 14776915.7286
+New best model saved with validation loss: 14776915.7286
+Epoch 6/60, Train Loss: 101242146.7714, Val Loss: 12879751.3321
+New best model saved with validation loss: 12879751.3321
+Epoch 7/60, Train Loss: 94208193.7536, Val Loss: 10653553.8643
+New best model saved with validation loss: 10653553.8643
+Epoch 8/60, Train Loss: 86246318.3607, Val Loss: 10118150.3429
+New best model saved with validation loss: 10118150.3429
+Epoch 9/60, Train Loss: 82854805.1107, Val Loss: 9205265.0857
+New best model saved with validation loss: 9205265.0857
+Epoch 10/60, Train Loss: 75718406.1500, Val Loss: 7727794.8857
+New best model saved with validation loss: 7727794.8857
+Epoch 11/60, Train Loss: 72326133.8839, Val Loss: 8815675.9366
+No improvement for 1 epochs
+Epoch 12/60, Train Loss: 64770339.5821, Val Loss: 6284622.5143
+New best model saved with validation loss: 6284622.5143
+Epoch 13/60, Train Loss: 65518392.9143, Val Loss: 7679370.4714
+No improvement for 1 epochs
+Epoch 14/60, Train Loss: 61701258.5000, Val Loss: 21407384.1143
+No improvement for 2 epochs
+Epoch 15/60, Train Loss: 60750192.4750, Val Loss: 9260836.3679
+No improvement for 3 epochs
+Epoch 16/60, Train Loss: 56196303.3429, Val Loss: 55368826.9714
+No improvement for 4 epochs
+Epoch 17/60, Train Loss: 58164914.1750, Val Loss: 9031471.9714
+No improvement for 5 epochs
+Epoch 18/60, Train Loss: 61583405.2607, Val Loss: 8395059.7143
+No improvement for 6 epochs
+Epoch 19/60, Train Loss: 57796318.3286, Val Loss: 3894646.2071
+New best model saved with validation loss: 3894646.2071
+Epoch 20/60, Train Loss: 61090137.6071, Val Loss: 17623998.4000
+No improvement for 1 epochs
+Epoch 21/60, Train Loss: 57457354.2000, Val Loss: 6141663.1821
+No improvement for 2 epochs
+Epoch 22/60, Train Loss: 56543773.0929, Val Loss: 5875363.8679
+No improvement for 3 epochs
+Epoch 23/60, Train Loss: 54835330.7429, Val Loss: 6961802.1714
+No improvement for 4 epochs
+Epoch 24/60, Train Loss: 54849336.7000, Val Loss: 5496382.1518
+No improvement for 5 epochs
+Epoch 25/60, Train Loss: 53581279.9357, Val Loss: 9317841.5143
+No improvement for 6 epochs
+Epoch 26/60, Train Loss: 60427240.2643, Val Loss: 4262907.4714
+No improvement for 7 epochs
+Epoch 27/60, Train Loss: 50707415.5286, Val Loss: 27774052.4571
+No improvement for 8 epochs
+Epoch 28/60, Train Loss: 52029586.2429, Val Loss: 11295691.0571
+No improvement for 9 epochs
+Epoch 29/60, Train Loss: 54781567.2357, Val Loss: 25788389.9429
+No improvement for 10 epochs
+Epoch 30/60, Train Loss: 54690924.2286, Val Loss: 3464368.8607
+New best model saved with validation loss: 3464368.8607
+Epoch 31/60, Train Loss: 52813280.6714, Val Loss: 5378530.4429
+No improvement for 1 epochs
+Epoch 32/60, Train Loss: 51680552.7929, Val Loss: 20674837.2571
+No improvement for 2 epochs
+Epoch 33/60, Train Loss: 51247875.0714, Val Loss: 9785515.6571
+No improvement for 3 epochs
+Epoch 34/60, Train Loss: 60038988.5429, Val Loss: 19343390.0000
+No improvement for 4 epochs
+Epoch 35/60, Train Loss: 48842496.5714, Val Loss: 3922513.4143
+No improvement for 5 epochs
+Epoch 36/60, Train Loss: 57062016.2429, Val Loss: 6330090.7143
+No improvement for 6 epochs
+Epoch 37/60, Train Loss: 49677587.0643, Val Loss: 3578625.1616
+No improvement for 7 epochs
+Epoch 38/60, Train Loss: 51424216.3214, Val Loss: 17477058.2286
+No improvement for 8 epochs
+Epoch 39/60, Train Loss: 48510864.3107, Val Loss: 6393840.5500
+No improvement for 9 epochs
+Epoch 40/60, Train Loss: 44036966.8714, Val Loss: 3458325.6107
+New best model saved with validation loss: 3458325.6107
+Epoch 41/60, Train Loss: 52340848.7071, Val Loss: 4785283.7446
+No improvement for 1 epochs
+Epoch 42/60, Train Loss: 48561884.2607, Val Loss: 5420968.9143
+No improvement for 2 epochs
+Epoch 43/60, Train Loss: 49124366.3286, Val Loss: 4443355.3107
+No improvement for 3 epochs
+Epoch 44/60, Train Loss: 50657326.9857, Val Loss: 5272389.2714
+No improvement for 4 epochs
+Epoch 45/60, Train Loss: 51692419.6643, Val Loss: 2595361.4429
+New best model saved with validation loss: 2595361.4429
+Epoch 46/60, Train Loss: 46718196.9000, Val Loss: 3653616.7536
+No improvement for 1 epochs
+Epoch 47/60, Train Loss: 53261084.7143, Val Loss: 8360219.1714
+No improvement for 2 epochs
+Epoch 48/60, Train Loss: 53636128.5643, Val Loss: 9691821.7500
+No improvement for 3 epochs
+Epoch 49/60, Train Loss: 40930375.2500, Val Loss: 4466788.4286
+No improvement for 4 epochs
+Epoch 50/60, Train Loss: 45351976.2786, Val Loss: 3254403.7929
+No improvement for 5 epochs
+Epoch 51/60, Train Loss: 48288271.8643, Val Loss: 3069056.7107
+No improvement for 6 epochs
+Epoch 52/60, Train Loss: 53677876.8286, Val Loss: 9422745.3429
+No improvement for 7 epochs
+Epoch 53/60, Train Loss: 45496505.1071, Val Loss: 3380630.0857
+No improvement for 8 epochs
+Epoch 54/60, Train Loss: 53849287.9714, Val Loss: 2927517.3286
+No improvement for 9 epochs
+Epoch 55/60, Train Loss: 45024151.3786, Val Loss: 3309494.2107
+No improvement for 10 epochs
+Epoch 56/60, Train Loss: 45866975.3071, Val Loss: 3852146.6536
+No improvement for 11 epochs
+Epoch 57/60, Train Loss: 49548153.9000, Val Loss: 37499527.3143
+No improvement for 12 epochs
+Epoch 58/60, Train Loss: 51284030.0607, Val Loss: 3444775.8643
+No improvement for 13 epochs
+Epoch 59/60, Train Loss: 52907779.2214, Val Loss: 46772106.8571
+No improvement for 14 epochs
+Epoch 60/60, Train Loss: 50139765.3714, Val Loss: 4056626.1857
+No improvement for 15 epochs
+Early stopping triggered after 60 epochs
+Training completed in 42.68 minutes
+Best validation loss: 2595361.4429
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 16, Filters: [64, 128, 256]):
+Mean Squared Error: 2310418944.0000
+Mean Absolute Error: 30742.9707
+R² Score: -14.3972
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 16, Filters = [128, 256, 512]
+================================================================================
+
+Model initialized with filters: [128, 256, 512]
+
+Starting training...
+Epoch 1/60, Train Loss: 116609630.7286, Val Loss: 16624204.1643
+New best model saved with validation loss: 16624204.1643
+Epoch 2/60, Train Loss: 114892350.3571, Val Loss: 15961065.4982
+New best model saved with validation loss: 15961065.4982
+Epoch 3/60, Train Loss: 111527968.2357, Val Loss: 15271845.9875
+New best model saved with validation loss: 15271845.9875
+Epoch 4/60, Train Loss: 105828120.7857, Val Loss: 14825355.6536
+New best model saved with validation loss: 14825355.6536
+Epoch 5/60, Train Loss: 98865954.4250, Val Loss: 13534998.3357
+New best model saved with validation loss: 13534998.3357
+Epoch 6/60, Train Loss: 89151566.6143, Val Loss: 9526293.9286
+New best model saved with validation loss: 9526293.9286
+Epoch 7/60, Train Loss: 83577921.8964, Val Loss: 11123593.0089
+No improvement for 1 epochs
+Epoch 8/60, Train Loss: 73295346.4643, Val Loss: 7414240.4777
+New best model saved with validation loss: 7414240.4777
+Epoch 9/60, Train Loss: 74303632.4643, Val Loss: 8004349.1429
+No improvement for 1 epochs
+Epoch 10/60, Train Loss: 67494426.2714, Val Loss: 9606765.4857
+No improvement for 2 epochs
+Epoch 11/60, Train Loss: 62393426.5071, Val Loss: 9289890.0000
+No improvement for 3 epochs
+Epoch 12/60, Train Loss: 61089604.7857, Val Loss: 7249123.6357
+New best model saved with validation loss: 7249123.6357
+Epoch 13/60, Train Loss: 60222229.8286, Val Loss: 8044834.8286
+No improvement for 1 epochs
+Epoch 14/60, Train Loss: 57751614.5964, Val Loss: 10831219.6000
+No improvement for 2 epochs
+Epoch 15/60, Train Loss: 65219970.9786, Val Loss: 4633277.7643
+New best model saved with validation loss: 4633277.7643
+Epoch 16/60, Train Loss: 51420099.9000, Val Loss: 18632119.8857
+No improvement for 1 epochs
+Epoch 17/60, Train Loss: 58238611.2071, Val Loss: 5633244.4821
+No improvement for 2 epochs
+Epoch 18/60, Train Loss: 50440438.0286, Val Loss: 4792954.5214
+No improvement for 3 epochs
+Epoch 19/60, Train Loss: 55655438.2929, Val Loss: 8980633.0286
+No improvement for 4 epochs
+Epoch 20/60, Train Loss: 57961555.9679, Val Loss: 143528564.1143
+No improvement for 5 epochs
+Epoch 21/60, Train Loss: 53227591.8786, Val Loss: 6740048.1250
+No improvement for 6 epochs
+Epoch 22/60, Train Loss: 49913331.3429, Val Loss: 73468192.2286
+No improvement for 7 epochs
+Epoch 23/60, Train Loss: 56705758.6429, Val Loss: 7178758.6500
+No improvement for 8 epochs
+Epoch 24/60, Train Loss: 57329598.0000, Val Loss: 4521801.5143
+New best model saved with validation loss: 4521801.5143
+Epoch 25/60, Train Loss: 56153515.7071, Val Loss: 5400518.4321
+No improvement for 1 epochs
+Epoch 26/60, Train Loss: 52318657.6071, Val Loss: 15149208.6857
+No improvement for 2 epochs
+Epoch 27/60, Train Loss: 54206254.9571, Val Loss: 5696731.8429
+No improvement for 3 epochs
+Epoch 28/60, Train Loss: 52243414.0786, Val Loss: 38703189.1429
+No improvement for 4 epochs
+Epoch 29/60, Train Loss: 47737620.4857, Val Loss: 79530594.7429
+No improvement for 5 epochs
+Epoch 30/60, Train Loss: 56974082.0143, Val Loss: 4895260.4250
+No improvement for 6 epochs
+Epoch 31/60, Train Loss: 51289054.1643, Val Loss: 5371371.8286
+No improvement for 7 epochs
+Epoch 32/60, Train Loss: 55578540.1214, Val Loss: 30533958.0571
+No improvement for 8 epochs
+Epoch 33/60, Train Loss: 52928294.9429, Val Loss: 139579842.7429
+No improvement for 9 epochs
+Epoch 34/60, Train Loss: 50086918.2571, Val Loss: 10189878.8107
+No improvement for 10 epochs
+Epoch 35/60, Train Loss: 50573935.4143, Val Loss: 77743490.2857
+No improvement for 11 epochs
+Epoch 36/60, Train Loss: 48539150.2089, Val Loss: 6502633.9982
+No improvement for 12 epochs
+Epoch 37/60, Train Loss: 50000562.3143, Val Loss: 15504538.4571
+No improvement for 13 epochs
+Epoch 38/60, Train Loss: 53912857.5357, Val Loss: 31184197.3714
+No improvement for 14 epochs
+Epoch 39/60, Train Loss: 55784145.1786, Val Loss: 3409448.3536
+New best model saved with validation loss: 3409448.3536
+Epoch 40/60, Train Loss: 48479295.5929, Val Loss: 73776027.4286
+No improvement for 1 epochs
+Epoch 41/60, Train Loss: 47399630.5143, Val Loss: 4556293.0857
+No improvement for 2 epochs
+Epoch 42/60, Train Loss: 50106640.6000, Val Loss: 131468890.5143
+No improvement for 3 epochs
+Epoch 43/60, Train Loss: 53113130.6143, Val Loss: 6025569.1679
+No improvement for 4 epochs
+Epoch 44/60, Train Loss: 44734661.2571, Val Loss: 84693637.9429
+No improvement for 5 epochs
+Epoch 45/60, Train Loss: 48355941.6000, Val Loss: 3276148.1857
+New best model saved with validation loss: 3276148.1857
+Epoch 46/60, Train Loss: 47423747.9214, Val Loss: 6614703.5429
+No improvement for 1 epochs
+Epoch 47/60, Train Loss: 49360383.2571, Val Loss: 8337422.5714
+No improvement for 2 epochs
+Epoch 48/60, Train Loss: 48458014.2929, Val Loss: 3897863.2286
+No improvement for 3 epochs
+Epoch 49/60, Train Loss: 52246472.0071, Val Loss: 29565313.4857
+No improvement for 4 epochs
+Epoch 50/60, Train Loss: 46853248.0214, Val Loss: 3114617.6768
+New best model saved with validation loss: 3114617.6768
+Epoch 51/60, Train Loss: 45545969.6000, Val Loss: 169150706.2857
+No improvement for 1 epochs
+Epoch 52/60, Train Loss: 46672857.4000, Val Loss: 22332219.2000
+No improvement for 2 epochs
+Epoch 53/60, Train Loss: 44244216.4357, Val Loss: 7254565.6179
+No improvement for 3 epochs
+Epoch 54/60, Train Loss: 48058756.8429, Val Loss: 5580368.6196
+No improvement for 4 epochs
+Epoch 55/60, Train Loss: 51152008.0286, Val Loss: 11421461.1429
+No improvement for 5 epochs
+Epoch 56/60, Train Loss: 51896276.9000, Val Loss: 2242040.4071
+New best model saved with validation loss: 2242040.4071
+Epoch 57/60, Train Loss: 47723132.3786, Val Loss: 4442526.3375
+No improvement for 1 epochs
+Epoch 58/60, Train Loss: 45080293.1143, Val Loss: 17375600.0000
+No improvement for 2 epochs
+Epoch 59/60, Train Loss: 44441166.9429, Val Loss: 60780548.8000
+No improvement for 3 epochs
+Epoch 60/60, Train Loss: 47644908.5286, Val Loss: 15017222.7714
+No improvement for 4 epochs
+Training completed in 113.05 minutes
+Best validation loss: 2242040.4071
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 16, Filters: [128, 256, 512]):
+Mean Squared Error: 5897983488.0000
+Mean Absolute Error: 53510.4062
+R² Score: -38.3057
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 32, Filters = [32, 64, 128]
+================================================================================
+
+Model initialized with filters: [32, 64, 128]
+
+Starting training...
+Epoch 1/60, Train Loss: 116808974.7429, Val Loss: 16635077.5714
+New best model saved with validation loss: 16635077.5714
+Epoch 2/60, Train Loss: 116687198.0857, Val Loss: 16626054.5714
+New best model saved with validation loss: 16626054.5714
+Epoch 3/60, Train Loss: 116398721.8000, Val Loss: 16572904.5143
+New best model saved with validation loss: 16572904.5143
+Epoch 4/60, Train Loss: 115969869.0857, Val Loss: 16459550.3429
+New best model saved with validation loss: 16459550.3429
+Epoch 5/60, Train Loss: 115223771.5429, Val Loss: 16268967.4857
+New best model saved with validation loss: 16268967.4857
+Epoch 6/60, Train Loss: 114240130.4571, Val Loss: 16141441.1286
+New best model saved with validation loss: 16141441.1286
+Epoch 7/60, Train Loss: 113121087.6286, Val Loss: 15641175.3714
+New best model saved with validation loss: 15641175.3714
+Epoch 8/60, Train Loss: 111664029.2714, Val Loss: 14818087.9857
+New best model saved with validation loss: 14818087.9857
+Epoch 9/60, Train Loss: 109494385.7143, Val Loss: 15428341.7071
+No improvement for 1 epochs
+Epoch 10/60, Train Loss: 107578290.6857, Val Loss: 14470709.1429
+New best model saved with validation loss: 14470709.1429
+Epoch 11/60, Train Loss: 105089553.8286, Val Loss: 14050423.7357
+New best model saved with validation loss: 14050423.7357
+Epoch 12/60, Train Loss: 101876468.0000, Val Loss: 13755016.6679
+New best model saved with validation loss: 13755016.6679
+Epoch 13/60, Train Loss: 99095843.8964, Val Loss: 12140473.3357
+New best model saved with validation loss: 12140473.3357
+Epoch 14/60, Train Loss: 95027379.2500, Val Loss: 11670982.7304
+New best model saved with validation loss: 11670982.7304
+Epoch 15/60, Train Loss: 92833919.4143, Val Loss: 9904998.9714
+New best model saved with validation loss: 9904998.9714
+Epoch 16/60, Train Loss: 90129770.2643, Val Loss: 10849203.9429
+No improvement for 1 epochs
+Epoch 17/60, Train Loss: 84636781.9429, Val Loss: 9680211.7143
+New best model saved with validation loss: 9680211.7143
+Epoch 18/60, Train Loss: 82150634.8571, Val Loss: 12163809.7107
+No improvement for 1 epochs
+Epoch 19/60, Train Loss: 82111252.9071, Val Loss: 10246862.5714
+No improvement for 2 epochs
+Epoch 20/60, Train Loss: 73804954.0143, Val Loss: 8018672.3679
+New best model saved with validation loss: 8018672.3679
+Epoch 21/60, Train Loss: 71458412.8571, Val Loss: 11955358.9786
+No improvement for 1 epochs
+Epoch 22/60, Train Loss: 70922078.0000, Val Loss: 11372689.0286
+No improvement for 2 epochs
+Epoch 23/60, Train Loss: 66004694.3429, Val Loss: 7685241.6857
+New best model saved with validation loss: 7685241.6857
+Epoch 24/60, Train Loss: 63011756.2857, Val Loss: 6267527.1714
+New best model saved with validation loss: 6267527.1714
+Epoch 25/60, Train Loss: 60332747.7643, Val Loss: 9526288.2000
+No improvement for 1 epochs
+Epoch 26/60, Train Loss: 60901213.8500, Val Loss: 5053100.2500
+New best model saved with validation loss: 5053100.2500
+Epoch 27/60, Train Loss: 57637876.3429, Val Loss: 6287405.2393
+No improvement for 1 epochs
+Epoch 28/60, Train Loss: 55388226.3143, Val Loss: 6475525.0714
+No improvement for 2 epochs
+Epoch 29/60, Train Loss: 56128337.6000, Val Loss: 10068075.1857
+No improvement for 3 epochs
+Epoch 30/60, Train Loss: 57979565.8714, Val Loss: 16000330.6857
+No improvement for 4 epochs
+Epoch 31/60, Train Loss: 60183186.3571, Val Loss: 7598453.7429
+No improvement for 5 epochs
+Epoch 32/60, Train Loss: 60448375.2571, Val Loss: 10000590.7714
+No improvement for 6 epochs
+Epoch 33/60, Train Loss: 54278221.9571, Val Loss: 33359131.5429
+No improvement for 7 epochs
+Epoch 34/60, Train Loss: 58054046.6714, Val Loss: 46122996.3429
+No improvement for 8 epochs
+Epoch 35/60, Train Loss: 49105531.4000, Val Loss: 4813885.2571
+New best model saved with validation loss: 4813885.2571
+Epoch 36/60, Train Loss: 53072374.7143, Val Loss: 41165406.1714
+No improvement for 1 epochs
+Epoch 37/60, Train Loss: 54287277.4286, Val Loss: 12189298.3857
+No improvement for 2 epochs
+Epoch 38/60, Train Loss: 54119173.6286, Val Loss: 5913784.8964
+No improvement for 3 epochs
+Epoch 39/60, Train Loss: 51536851.5429, Val Loss: 6988731.8661
+No improvement for 4 epochs
+Epoch 40/60, Train Loss: 52155207.3000, Val Loss: 142336275.2000
+No improvement for 5 epochs
+Epoch 41/60, Train Loss: 52285522.6286, Val Loss: 39383118.6286
+No improvement for 6 epochs
+Epoch 42/60, Train Loss: 48896065.9000, Val Loss: 182462498.7429
+No improvement for 7 epochs
+Epoch 43/60, Train Loss: 53474780.5714, Val Loss: 306476097.8286
+No improvement for 8 epochs
+Epoch 44/60, Train Loss: 55372912.5143, Val Loss: 4718369.4714
+New best model saved with validation loss: 4718369.4714
+Epoch 45/60, Train Loss: 52484319.2571, Val Loss: 3319247.1911
+New best model saved with validation loss: 3319247.1911
+Epoch 46/60, Train Loss: 52744382.5714, Val Loss: 478135606.8571
+No improvement for 1 epochs
+Epoch 47/60, Train Loss: 56216692.5714, Val Loss: 4137907.9571
+No improvement for 2 epochs
+Epoch 48/60, Train Loss: 52264454.2857, Val Loss: 5697716.7714
+No improvement for 3 epochs
+Epoch 49/60, Train Loss: 49843234.6286, Val Loss: 5789241.0714
+No improvement for 4 epochs
+Epoch 50/60, Train Loss: 50551047.2000, Val Loss: 148340279.7714
+No improvement for 5 epochs
+Epoch 51/60, Train Loss: 54475525.5429, Val Loss: 30500134.7429
+No improvement for 6 epochs
+Epoch 52/60, Train Loss: 50797645.9429, Val Loss: 30575634.9714
+No improvement for 7 epochs
+Epoch 53/60, Train Loss: 45891121.4000, Val Loss: 6772323.6143
+No improvement for 8 epochs
+Epoch 54/60, Train Loss: 46576436.0571, Val Loss: 776097693.2571
+No improvement for 9 epochs
+Epoch 55/60, Train Loss: 47702778.5571, Val Loss: 319929531.4286
+No improvement for 10 epochs
+Epoch 56/60, Train Loss: 47461292.4857, Val Loss: 163161366.8571
+No improvement for 11 epochs
+Epoch 57/60, Train Loss: 48663570.0000, Val Loss: 6000471.3714
+No improvement for 12 epochs
+Epoch 58/60, Train Loss: 49043998.0000, Val Loss: 675726058.0571
+No improvement for 13 epochs
+Epoch 59/60, Train Loss: 47573874.4571, Val Loss: 528605582.6286
+No improvement for 14 epochs
+Epoch 60/60, Train Loss: 50552762.6857, Val Loss: 25598433.2571
+No improvement for 15 epochs
+Early stopping triggered after 60 epochs
+Training completed in 17.95 minutes
+Best validation loss: 3319247.1911
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 32, Filters: [32, 64, 128]):
+Mean Squared Error: 15357578240.0000
+Mean Absolute Error: 86674.9375
+R² Score: -101.3470
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 32, Filters = [16, 32, 64]
+================================================================================
+
+Model initialized with filters: [16, 32, 64]
+
+Starting training...
+Epoch 1/60, Train Loss: 116824432.4857, Val Loss: 16635219.7446
+New best model saved with validation loss: 16635219.7446
+Epoch 2/60, Train Loss: 116760665.8857, Val Loss: 16629278.2964
+New best model saved with validation loss: 16629278.2964
+Epoch 3/60, Train Loss: 116623216.3143, Val Loss: 16588968.0714
+New best model saved with validation loss: 16588968.0714
+Epoch 4/60, Train Loss: 116366036.4571, Val Loss: 16499546.1750
+New best model saved with validation loss: 16499546.1750
+Epoch 5/60, Train Loss: 115919362.5143, Val Loss: 16408806.6857
+New best model saved with validation loss: 16408806.6857
+Epoch 6/60, Train Loss: 115374087.8000, Val Loss: 16331536.9714
+New best model saved with validation loss: 16331536.9714
+Epoch 7/60, Train Loss: 114529917.6286, Val Loss: 16136559.4571
+New best model saved with validation loss: 16136559.4571
+Epoch 8/60, Train Loss: 113553187.6714, Val Loss: 15836314.5714
+New best model saved with validation loss: 15836314.5714
+Epoch 9/60, Train Loss: 112294984.0857, Val Loss: 15429293.1571
+New best model saved with validation loss: 15429293.1571
+Epoch 10/60, Train Loss: 111194627.0857, Val Loss: 16122370.5357
+No improvement for 1 epochs
+Epoch 11/60, Train Loss: 109043435.1429, Val Loss: 15499083.3857
+No improvement for 2 epochs
+Epoch 12/60, Train Loss: 107732777.9714, Val Loss: 15028522.8036
+New best model saved with validation loss: 15028522.8036
+Epoch 13/60, Train Loss: 104808163.6286, Val Loss: 13893996.9330
+New best model saved with validation loss: 13893996.9330
+Epoch 14/60, Train Loss: 103274088.3643, Val Loss: 13806542.8000
+New best model saved with validation loss: 13806542.8000
+Epoch 15/60, Train Loss: 99600026.3429, Val Loss: 14065585.2000
+No improvement for 1 epochs
+Epoch 16/60, Train Loss: 97694643.1571, Val Loss: 12482183.1286
+New best model saved with validation loss: 12482183.1286
+Epoch 17/60, Train Loss: 93930535.8143, Val Loss: 13018972.8571
+No improvement for 1 epochs
+Epoch 18/60, Train Loss: 92051260.0857, Val Loss: 11939997.7696
+New best model saved with validation loss: 11939997.7696
+Epoch 19/60, Train Loss: 88609319.3143, Val Loss: 10725399.7143
+New best model saved with validation loss: 10725399.7143
+Epoch 20/60, Train Loss: 86037536.4286, Val Loss: 11697807.8500
+No improvement for 1 epochs
+Epoch 21/60, Train Loss: 84088130.6893, Val Loss: 9926235.5000
+New best model saved with validation loss: 9926235.5000
+Epoch 22/60, Train Loss: 80040493.3786, Val Loss: 10008487.4000
+No improvement for 1 epochs
+Epoch 23/60, Train Loss: 78678256.3714, Val Loss: 10514034.5750
+No improvement for 2 epochs
+Epoch 24/60, Train Loss: 73784371.2214, Val Loss: 12510879.7429
+No improvement for 3 epochs
+Epoch 25/60, Train Loss: 74410042.1857, Val Loss: 8887281.7821
+New best model saved with validation loss: 8887281.7821
+Epoch 26/60, Train Loss: 69801368.9143, Val Loss: 9338234.7143
+No improvement for 1 epochs
+Epoch 27/60, Train Loss: 64851221.4000, Val Loss: 7846998.9714
+New best model saved with validation loss: 7846998.9714
+Epoch 28/60, Train Loss: 65267988.2286, Val Loss: 6532761.2429
+New best model saved with validation loss: 6532761.2429
+Epoch 29/60, Train Loss: 61927142.7357, Val Loss: 6001692.3000
+New best model saved with validation loss: 6001692.3000
+Epoch 30/60, Train Loss: 60584090.7857, Val Loss: 5981183.1500
+New best model saved with validation loss: 5981183.1500
+Epoch 31/60, Train Loss: 58932456.0143, Val Loss: 8651318.8571
+No improvement for 1 epochs
+Epoch 32/60, Train Loss: 57936917.3429, Val Loss: 9658686.9571
+No improvement for 2 epochs
+Epoch 33/60, Train Loss: 57833461.0143, Val Loss: 10019624.8571
+No improvement for 3 epochs
+Epoch 34/60, Train Loss: 56661435.0857, Val Loss: 7047580.7214
+No improvement for 4 epochs
+Epoch 35/60, Train Loss: 57148582.5429, Val Loss: 10603421.0286
+No improvement for 5 epochs
+Epoch 36/60, Train Loss: 54219729.3286, Val Loss: 26786544.3429
+No improvement for 6 epochs
+Epoch 37/60, Train Loss: 53987994.1143, Val Loss: 9066278.1714
+No improvement for 7 epochs
+Epoch 38/60, Train Loss: 51602969.1714, Val Loss: 5491759.7000
+New best model saved with validation loss: 5491759.7000
+Epoch 39/60, Train Loss: 55807998.4429, Val Loss: 262478308.5714
+No improvement for 1 epochs
+Epoch 40/60, Train Loss: 53463948.6429, Val Loss: 6550228.4857
+No improvement for 2 epochs
+Epoch 41/60, Train Loss: 57857800.1714, Val Loss: 6614686.2518
+No improvement for 3 epochs
+Epoch 42/60, Train Loss: 51016145.3286, Val Loss: 5250863.8143
+New best model saved with validation loss: 5250863.8143
+Epoch 43/60, Train Loss: 49203195.6857, Val Loss: 16325702.9714
+No improvement for 1 epochs
+Epoch 44/60, Train Loss: 52584540.5429, Val Loss: 5785486.0857
+No improvement for 2 epochs
+Epoch 45/60, Train Loss: 50621200.2000, Val Loss: 16235960.6286
+No improvement for 3 epochs
+Epoch 46/60, Train Loss: 54238383.6000, Val Loss: 8500631.8857
+No improvement for 4 epochs
+Epoch 47/60, Train Loss: 46798069.4857, Val Loss: 16289325.3714
+No improvement for 5 epochs
+Epoch 48/60, Train Loss: 54225709.3714, Val Loss: 5940706.8643
+No improvement for 6 epochs
+Epoch 49/60, Train Loss: 53447026.2286, Val Loss: 10696757.1143
+No improvement for 7 epochs
+Epoch 50/60, Train Loss: 52391985.0571, Val Loss: 8444527.2000
+No improvement for 8 epochs
+Epoch 51/60, Train Loss: 48734770.1714, Val Loss: 9584421.4857
+No improvement for 9 epochs
+Epoch 52/60, Train Loss: 44549353.7857, Val Loss: 26745724.2286
+No improvement for 10 epochs
+Epoch 53/60, Train Loss: 46497108.8571, Val Loss: 12944599.6000
+No improvement for 11 epochs
+Epoch 54/60, Train Loss: 45333853.2000, Val Loss: 7043150.5143
+No improvement for 12 epochs
+Epoch 55/60, Train Loss: 49361502.7429, Val Loss: 9649923.0857
+No improvement for 13 epochs
+Epoch 56/60, Train Loss: 50528159.7429, Val Loss: 5307916.5214
+No improvement for 14 epochs
+Epoch 57/60, Train Loss: 47361139.6571, Val Loss: 8174763.9857
+No improvement for 15 epochs
+Early stopping triggered after 57 epochs
+Training completed in 10.22 minutes
+Best validation loss: 5250863.8143
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 32, Filters: [16, 32, 64]):
+Mean Squared Error: 4549519872.0000
+Mean Absolute Error: 55043.4336
+R² Score: -29.3192
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 32, Filters = [64, 128, 256]
+================================================================================
+
+Model initialized with filters: [64, 128, 256]
+
+Starting training...
+Epoch 1/60, Train Loss: 116777434.9000, Val Loss: 16634153.4000
+New best model saved with validation loss: 16634153.4000
+Epoch 2/60, Train Loss: 116479879.2714, Val Loss: 16597469.6571
+New best model saved with validation loss: 16597469.6571
+Epoch 3/60, Train Loss: 115787042.7429, Val Loss: 16460316.1482
+New best model saved with validation loss: 16460316.1482
+Epoch 4/60, Train Loss: 114461845.5857, Val Loss: 16154011.3143
+New best model saved with validation loss: 16154011.3143
+Epoch 5/60, Train Loss: 112791178.6857, Val Loss: 15694885.8286
+New best model saved with validation loss: 15694885.8286
+Epoch 6/60, Train Loss: 110870665.4714, Val Loss: 15306305.2286
+New best model saved with validation loss: 15306305.2286
+Epoch 7/60, Train Loss: 108255364.2714, Val Loss: 15515573.7000
+No improvement for 1 epochs
+Epoch 8/60, Train Loss: 104673185.2571, Val Loss: 13066317.3714
+New best model saved with validation loss: 13066317.3714
+Epoch 9/60, Train Loss: 100367499.7286, Val Loss: 12895258.9571
+New best model saved with validation loss: 12895258.9571
+Epoch 10/60, Train Loss: 95744752.4857, Val Loss: 12857522.1214
+New best model saved with validation loss: 12857522.1214
+Epoch 11/60, Train Loss: 90245094.6643, Val Loss: 11933937.2571
+New best model saved with validation loss: 11933937.2571
+Epoch 12/60, Train Loss: 86901135.1857, Val Loss: 9454276.0286
+New best model saved with validation loss: 9454276.0286
+Epoch 13/60, Train Loss: 82689683.0571, Val Loss: 9355976.9857
+New best model saved with validation loss: 9355976.9857
+Epoch 14/60, Train Loss: 77189340.8286, Val Loss: 8895522.5813
+New best model saved with validation loss: 8895522.5813
+Epoch 15/60, Train Loss: 73862997.8143, Val Loss: 11653950.2571
+No improvement for 1 epochs
+Epoch 16/60, Train Loss: 72557807.2571, Val Loss: 8180870.0143
+New best model saved with validation loss: 8180870.0143
+Epoch 17/60, Train Loss: 65828575.8286, Val Loss: 9472600.4143
+No improvement for 1 epochs
+Epoch 18/60, Train Loss: 65882842.8429, Val Loss: 6784081.1500
+New best model saved with validation loss: 6784081.1500
+Epoch 19/60, Train Loss: 62580415.7571, Val Loss: 33620418.9714
+No improvement for 1 epochs
+Epoch 20/60, Train Loss: 62242281.6714, Val Loss: 6343010.1000
+New best model saved with validation loss: 6343010.1000
+Epoch 21/60, Train Loss: 58379913.6286, Val Loss: 5562808.7714
+New best model saved with validation loss: 5562808.7714
+Epoch 22/60, Train Loss: 56788821.3000, Val Loss: 10515850.0571
+No improvement for 1 epochs
+Epoch 23/60, Train Loss: 57887204.3429, Val Loss: 5639360.2250
+No improvement for 2 epochs
+Epoch 24/60, Train Loss: 56484885.0571, Val Loss: 71521208.2286
+No improvement for 3 epochs
+Epoch 25/60, Train Loss: 51826321.0143, Val Loss: 22591152.0000
+No improvement for 4 epochs
+Epoch 26/60, Train Loss: 56365934.2000, Val Loss: 13099561.0214
+No improvement for 5 epochs
+Epoch 27/60, Train Loss: 53729594.9714, Val Loss: 21335569.6000
+No improvement for 6 epochs
+Epoch 28/60, Train Loss: 55488673.9429, Val Loss: 304120084.1143
+No improvement for 7 epochs
+Epoch 29/60, Train Loss: 54466117.1143, Val Loss: 13241732.5714
+No improvement for 8 epochs
+Epoch 30/60, Train Loss: 53362774.1714, Val Loss: 4229400.8357
+New best model saved with validation loss: 4229400.8357
+Epoch 31/60, Train Loss: 53195655.8143, Val Loss: 6787308.3214
+No improvement for 1 epochs
+Epoch 32/60, Train Loss: 49365697.1286, Val Loss: 94723545.6000
+No improvement for 2 epochs
+Epoch 33/60, Train Loss: 50740401.9429, Val Loss: 181223447.7714
+No improvement for 3 epochs
+Epoch 34/60, Train Loss: 54304246.5714, Val Loss: 8963257.1286
+No improvement for 4 epochs
+Epoch 35/60, Train Loss: 48454434.9429, Val Loss: 5977728.5786
+No improvement for 5 epochs
+Epoch 36/60, Train Loss: 54734353.9143, Val Loss: 5906877.5429
+No improvement for 6 epochs
+Epoch 37/60, Train Loss: 53443658.5714, Val Loss: 11702950.5071
+No improvement for 7 epochs
+Epoch 38/60, Train Loss: 47462738.0286, Val Loss: 4402109.1214
+No improvement for 8 epochs
+Epoch 39/60, Train Loss: 45234585.6571, Val Loss: 9070670.7714
+No improvement for 9 epochs
+Epoch 40/60, Train Loss: 47887723.7286, Val Loss: 14178243.3054
+No improvement for 10 epochs
+Epoch 41/60, Train Loss: 47300873.9143, Val Loss: 10087360.5286
+No improvement for 11 epochs
+Epoch 42/60, Train Loss: 55710274.5143, Val Loss: 8542749.4857
+No improvement for 12 epochs
+Epoch 43/60, Train Loss: 48448084.9286, Val Loss: 315839372.8000
+No improvement for 13 epochs
+Epoch 44/60, Train Loss: 50940399.5714, Val Loss: 65896032.2286
+No improvement for 14 epochs
+Epoch 45/60, Train Loss: 48271757.4429, Val Loss: 9127669.0000
+No improvement for 15 epochs
+Early stopping triggered after 45 epochs
+Training completed in 30.47 minutes
+Best validation loss: 4229400.8357
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 32, Filters: [64, 128, 256]):
+Mean Squared Error: 3441723392.0000
+Mean Absolute Error: 38880.1719
+R² Score: -21.9366
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 32, Filters = [128, 256, 512]
+================================================================================
+
+Model initialized with filters: [128, 256, 512]
+
+Starting training...
+Epoch 1/60, Train Loss: 116736606.9143, Val Loss: 16632508.7732
+New best model saved with validation loss: 16632508.7732
+Epoch 2/60, Train Loss: 116149350.9429, Val Loss: 16583843.8000
+New best model saved with validation loss: 16583843.8000
+Epoch 3/60, Train Loss: 114837766.9143, Val Loss: 16272577.7571
+New best model saved with validation loss: 16272577.7571
+Epoch 4/60, Train Loss: 112646242.1714, Val Loss: 15996830.4982
+New best model saved with validation loss: 15996830.4982
+Epoch 5/60, Train Loss: 109999931.7429, Val Loss: 15512789.6143
+New best model saved with validation loss: 15512789.6143
+Epoch 6/60, Train Loss: 106401768.6071, Val Loss: 13938385.1714
+New best model saved with validation loss: 13938385.1714
+Epoch 7/60, Train Loss: 101307649.2714, Val Loss: 14101676.2937
+No improvement for 1 epochs
+Epoch 8/60, Train Loss: 95412314.5857, Val Loss: 12580598.2241
+New best model saved with validation loss: 12580598.2241
+Epoch 9/60, Train Loss: 89923414.1857, Val Loss: 12104137.2286
+New best model saved with validation loss: 12104137.2286
+Epoch 10/60, Train Loss: 87314089.6286, Val Loss: 8406827.7571
+New best model saved with validation loss: 8406827.7571
+Epoch 11/60, Train Loss: 78200280.7286, Val Loss: 8879327.8143
+No improvement for 1 epochs
+Epoch 12/60, Train Loss: 76439676.7357, Val Loss: 8601206.3071
+No improvement for 2 epochs
+Epoch 13/60, Train Loss: 70454220.3714, Val Loss: 10051325.8571
+No improvement for 3 epochs
+Epoch 14/60, Train Loss: 66393768.6571, Val Loss: 9240093.9571
+No improvement for 4 epochs
+Epoch 15/60, Train Loss: 64797310.3000, Val Loss: 6486202.9714
+New best model saved with validation loss: 6486202.9714
+Epoch 16/60, Train Loss: 62562927.2571, Val Loss: 16323106.0000
+No improvement for 1 epochs
+Epoch 17/60, Train Loss: 63969514.6143, Val Loss: 18673646.5714
+No improvement for 2 epochs
+Epoch 18/60, Train Loss: 59332851.1857, Val Loss: 9706347.5500
+No improvement for 3 epochs
+Epoch 19/60, Train Loss: 58466966.6000, Val Loss: 6246972.2911
+New best model saved with validation loss: 6246972.2911
+Epoch 20/60, Train Loss: 56996466.7429, Val Loss: 12224974.9000
+No improvement for 1 epochs
+Epoch 21/60, Train Loss: 57607182.3571, Val Loss: 68355360.4571
+No improvement for 2 epochs
+Epoch 22/60, Train Loss: 60641403.4571, Val Loss: 6689518.0571
+No improvement for 3 epochs
+Epoch 23/60, Train Loss: 57060115.6857, Val Loss: 9661853.8000
+No improvement for 4 epochs
+Epoch 24/60, Train Loss: 53726263.4286, Val Loss: 40950403.2000
+No improvement for 5 epochs
+Epoch 25/60, Train Loss: 58288827.6000, Val Loss: 61644493.9429
+No improvement for 6 epochs
+Epoch 26/60, Train Loss: 51671555.2143, Val Loss: 49557350.8571
+No improvement for 7 epochs
+Epoch 27/60, Train Loss: 54617623.9286, Val Loss: 10215676.8000
+No improvement for 8 epochs
+Epoch 28/60, Train Loss: 51048442.3929, Val Loss: 3626580.2071
+New best model saved with validation loss: 3626580.2071
+Epoch 29/60, Train Loss: 50124343.0857, Val Loss: 13694383.4286
+No improvement for 1 epochs
+Epoch 30/60, Train Loss: 56848077.1714, Val Loss: 6389031.7857
+No improvement for 2 epochs
+Epoch 31/60, Train Loss: 51235830.8857, Val Loss: 40334813.0286
+No improvement for 3 epochs
+Epoch 32/60, Train Loss: 53020866.6714, Val Loss: 8249501.7714
+No improvement for 4 epochs
+Epoch 33/60, Train Loss: 50622797.9714, Val Loss: 3366870.6786
+New best model saved with validation loss: 3366870.6786
+Epoch 34/60, Train Loss: 54653183.4571, Val Loss: 3583491.1304
+No improvement for 1 epochs
+Epoch 35/60, Train Loss: 51233933.7714, Val Loss: 26204908.8000
+No improvement for 2 epochs
+Epoch 36/60, Train Loss: 50182860.8429, Val Loss: 3131157.7857
+New best model saved with validation loss: 3131157.7857
+Epoch 37/60, Train Loss: 54085410.2429, Val Loss: 88035226.0571
+No improvement for 1 epochs
+Epoch 38/60, Train Loss: 48131150.4000, Val Loss: 118926657.3714
+No improvement for 2 epochs
+Epoch 39/60, Train Loss: 56578588.2286, Val Loss: 8503763.3429
+No improvement for 3 epochs
+Epoch 40/60, Train Loss: 50242461.3714, Val Loss: 3061533.9536
+New best model saved with validation loss: 3061533.9536
+Epoch 41/60, Train Loss: 50420666.3857, Val Loss: 39434892.1143
+No improvement for 1 epochs
+Epoch 42/60, Train Loss: 49108211.4857, Val Loss: 304279700.1143
+No improvement for 2 epochs
+Epoch 43/60, Train Loss: 50402207.4286, Val Loss: 41650392.9143
+No improvement for 3 epochs
+Epoch 44/60, Train Loss: 51400914.8286, Val Loss: 308010748.3429
+No improvement for 4 epochs
+Epoch 45/60, Train Loss: 49542239.4286, Val Loss: 40141696.0000
+No improvement for 5 epochs
+Epoch 46/60, Train Loss: 48385796.3143, Val Loss: 15172829.0857
+No improvement for 6 epochs
+Epoch 47/60, Train Loss: 53898102.7714, Val Loss: 72131162.5143
+No improvement for 7 epochs
+Epoch 48/60, Train Loss: 51415392.7714, Val Loss: 5794891.9429
+No improvement for 8 epochs
+Epoch 49/60, Train Loss: 47369625.3143, Val Loss: 218257890.7429
+No improvement for 9 epochs
+Epoch 50/60, Train Loss: 50838908.1429, Val Loss: 8885682.6464
+No improvement for 10 epochs
+Epoch 51/60, Train Loss: 50581056.7143, Val Loss: 4798366.9143
+No improvement for 11 epochs
+Epoch 52/60, Train Loss: 51080475.2000, Val Loss: 3783761.9000
+No improvement for 12 epochs
+Epoch 53/60, Train Loss: 43614523.2571, Val Loss: 4193659.6143
+No improvement for 13 epochs
+Epoch 54/60, Train Loss: 41583903.0857, Val Loss: 265956676.5714
+No improvement for 14 epochs
+Epoch 55/60, Train Loss: 46347493.5429, Val Loss: 231782162.2857
+No improvement for 15 epochs
+Early stopping triggered after 55 epochs
+Training completed in 101.84 minutes
+Best validation loss: 3061533.9536
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 32, Filters: [128, 256, 512]):
+Mean Squared Error: 12290554880.0000
+Mean Absolute Error: 90730.5938
+R² Score: -80.9075
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 64, Filters = [32, 64, 128]
+================================================================================
+
+Model initialized with filters: [32, 64, 128]
+
+Starting training...
+Epoch 1/60, Train Loss: 116826543.0857, Val Loss: 16635766.5143
+New best model saved with validation loss: 16635766.5143
+Epoch 2/60, Train Loss: 116785878.0571, Val Loss: 16635013.4857
+New best model saved with validation loss: 16635013.4857
+Epoch 3/60, Train Loss: 116716468.5714, Val Loss: 16631856.0286
+New best model saved with validation loss: 16631856.0286
+Epoch 4/60, Train Loss: 116598700.5714, Val Loss: 16620040.0000
+New best model saved with validation loss: 16620040.0000
+Epoch 5/60, Train Loss: 116443895.1286, Val Loss: 16584452.6857
+New best model saved with validation loss: 16584452.6857
+Epoch 6/60, Train Loss: 116194953.7143, Val Loss: 16540879.0857
+New best model saved with validation loss: 16540879.0857
+Epoch 7/60, Train Loss: 115963041.0857, Val Loss: 16398389.3143
+New best model saved with validation loss: 16398389.3143
+Epoch 8/60, Train Loss: 115513653.0286, Val Loss: 16341197.8857
+New best model saved with validation loss: 16341197.8857
+Epoch 9/60, Train Loss: 114978225.2571, Val Loss: 16267972.9000
+New best model saved with validation loss: 16267972.9000
+Epoch 10/60, Train Loss: 114364824.9143, Val Loss: 16308960.5714
+No improvement for 1 epochs
+Epoch 11/60, Train Loss: 113889809.3714, Val Loss: 16105009.4286
+New best model saved with validation loss: 16105009.4286
+Epoch 12/60, Train Loss: 112937835.4286, Val Loss: 16144150.5000
+No improvement for 1 epochs
+Epoch 13/60, Train Loss: 112042573.1429, Val Loss: 16085327.6571
+New best model saved with validation loss: 16085327.6571
+Epoch 14/60, Train Loss: 111105486.4714, Val Loss: 15634825.3429
+New best model saved with validation loss: 15634825.3429
+Epoch 15/60, Train Loss: 110124903.2714, Val Loss: 15680871.5429
+No improvement for 1 epochs
+Epoch 16/60, Train Loss: 108637768.0000, Val Loss: 14379398.2857
+New best model saved with validation loss: 14379398.2857
+Epoch 17/60, Train Loss: 108212373.3714, Val Loss: 14167266.0000
+New best model saved with validation loss: 14167266.0000
+Epoch 18/60, Train Loss: 106049513.1429, Val Loss: 14990338.4286
+No improvement for 1 epochs
+Epoch 19/60, Train Loss: 104161014.1714, Val Loss: 13470005.2571
+New best model saved with validation loss: 13470005.2571
+Epoch 20/60, Train Loss: 103457890.1714, Val Loss: 12725213.4857
+New best model saved with validation loss: 12725213.4857
+Epoch 21/60, Train Loss: 101405412.3429, Val Loss: 13579846.4000
+No improvement for 1 epochs
+Epoch 22/60, Train Loss: 99431087.0857, Val Loss: 12575607.0857
+New best model saved with validation loss: 12575607.0857
+Epoch 23/60, Train Loss: 97279145.5429, Val Loss: 11630548.9143
+New best model saved with validation loss: 11630548.9143
+Epoch 24/60, Train Loss: 95643739.2714, Val Loss: 12196390.8929
+No improvement for 1 epochs
+Epoch 25/60, Train Loss: 94283060.5714, Val Loss: 11470472.7429
+New best model saved with validation loss: 11470472.7429
+Epoch 26/60, Train Loss: 92302451.5786, Val Loss: 10341919.4286
+New best model saved with validation loss: 10341919.4286
+Epoch 27/60, Train Loss: 89315922.3429, Val Loss: 12516828.2286
+No improvement for 1 epochs
+Epoch 28/60, Train Loss: 88926522.1571, Val Loss: 13102317.0286
+No improvement for 2 epochs
+Epoch 29/60, Train Loss: 84351592.3429, Val Loss: 11877169.2429
+No improvement for 3 epochs
+Epoch 30/60, Train Loss: 83197879.6000, Val Loss: 10613439.1357
+No improvement for 4 epochs
+Epoch 31/60, Train Loss: 82109882.8571, Val Loss: 9359508.7714
+New best model saved with validation loss: 9359508.7714
+Epoch 32/60, Train Loss: 78142242.4571, Val Loss: 8892408.9714
+New best model saved with validation loss: 8892408.9714
+Epoch 33/60, Train Loss: 77610163.5036, Val Loss: 7969949.7714
+New best model saved with validation loss: 7969949.7714
+Epoch 34/60, Train Loss: 74283711.0571, Val Loss: 8146064.2071
+No improvement for 1 epochs
+Epoch 35/60, Train Loss: 73171625.4857, Val Loss: 9443533.7286
+No improvement for 2 epochs
+Epoch 36/60, Train Loss: 72539554.1429, Val Loss: 8580771.4857
+No improvement for 3 epochs
+Epoch 37/60, Train Loss: 71264301.0000, Val Loss: 11637519.4286
+No improvement for 4 epochs
+Epoch 38/60, Train Loss: 66336928.9143, Val Loss: 11725175.9429
+No improvement for 5 epochs
+Epoch 39/60, Train Loss: 64185071.8429, Val Loss: 13499532.5714
+No improvement for 6 epochs
+Epoch 40/60, Train Loss: 64051181.7571, Val Loss: 12994631.6714
+No improvement for 7 epochs
+Epoch 41/60, Train Loss: 60868515.6571, Val Loss: 7627359.7429
+New best model saved with validation loss: 7627359.7429
+Epoch 42/60, Train Loss: 60928926.3714, Val Loss: 12365474.2714
+No improvement for 1 epochs
+Epoch 43/60, Train Loss: 60712381.3429, Val Loss: 6577640.2571
+New best model saved with validation loss: 6577640.2571
+Epoch 44/60, Train Loss: 60914768.6714, Val Loss: 8482837.6000
+No improvement for 1 epochs
+Epoch 45/60, Train Loss: 55809508.6857, Val Loss: 11375406.2000
+No improvement for 2 epochs
+Epoch 46/60, Train Loss: 55951495.7143, Val Loss: 6856889.0857
+No improvement for 3 epochs
+Epoch 47/60, Train Loss: 53900124.9714, Val Loss: 91517335.7714
+No improvement for 4 epochs
+Epoch 48/60, Train Loss: 57838315.9143, Val Loss: 149822204.8000
+No improvement for 5 epochs
+Epoch 49/60, Train Loss: 55283943.5000, Val Loss: 38537136.6857
+No improvement for 6 epochs
+Epoch 50/60, Train Loss: 58050046.7429, Val Loss: 22681095.7714
+No improvement for 7 epochs
+Epoch 51/60, Train Loss: 54747607.3714, Val Loss: 69951400.0000
+No improvement for 8 epochs
+Epoch 52/60, Train Loss: 55827059.3714, Val Loss: 8423708.4000
+No improvement for 9 epochs
+Epoch 53/60, Train Loss: 51391400.9429, Val Loss: 28141097.8286
+No improvement for 10 epochs
+Epoch 54/60, Train Loss: 52567938.4000, Val Loss: 6739648.2000
+No improvement for 11 epochs
+Epoch 55/60, Train Loss: 58026778.0286, Val Loss: 48692604.5714
+No improvement for 12 epochs
+Epoch 56/60, Train Loss: 54972706.0000, Val Loss: 225170909.2571
+No improvement for 13 epochs
+Epoch 57/60, Train Loss: 53499444.6357, Val Loss: 275729073.3714
+No improvement for 14 epochs
+Epoch 58/60, Train Loss: 54820614.5143, Val Loss: 5202631.2393
+New best model saved with validation loss: 5202631.2393
+Epoch 59/60, Train Loss: 55846203.3429, Val Loss: 5885065.7714
+No improvement for 1 epochs
+Epoch 60/60, Train Loss: 48817709.4857, Val Loss: 145651520.0000
+No improvement for 2 epochs
+Training completed in 16.72 minutes
+Best validation loss: 5202631.2393
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 64, Filters: [32, 64, 128]):
+Mean Squared Error: 22961950720.0000
+Mean Absolute Error: 126190.9766
+R² Score: -152.0246
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 64, Filters = [16, 32, 64]
+================================================================================
+
+Model initialized with filters: [16, 32, 64]
+
+Starting training...
+Epoch 1/60, Train Loss: 116827722.2286, Val Loss: 16635884.8000
+New best model saved with validation loss: 16635884.8000
+Epoch 2/60, Train Loss: 116806800.9143, Val Loss: 16635361.8857
+New best model saved with validation loss: 16635361.8857
+Epoch 3/60, Train Loss: 116768411.2000, Val Loss: 16632946.7571
+New best model saved with validation loss: 16632946.7571
+Epoch 4/60, Train Loss: 116702044.5714, Val Loss: 16621765.6571
+New best model saved with validation loss: 16621765.6571
+Epoch 5/60, Train Loss: 116617346.7429, Val Loss: 16602951.0857
+New best model saved with validation loss: 16602951.0857
+Epoch 6/60, Train Loss: 116498030.0571, Val Loss: 16552553.0286
+New best model saved with validation loss: 16552553.0286
+Epoch 7/60, Train Loss: 116323548.5429, Val Loss: 16547822.9143
+New best model saved with validation loss: 16547822.9143
+Epoch 8/60, Train Loss: 116082875.2000, Val Loss: 16533705.1429
+New best model saved with validation loss: 16533705.1429
+Epoch 9/60, Train Loss: 115841666.5143, Val Loss: 16496447.1429
+New best model saved with validation loss: 16496447.1429
+Epoch 10/60, Train Loss: 115545301.9429, Val Loss: 16420540.5714
+New best model saved with validation loss: 16420540.5714
+Epoch 11/60, Train Loss: 115150510.1714, Val Loss: 16408846.5143
+New best model saved with validation loss: 16408846.5143
+Epoch 12/60, Train Loss: 114750138.9714, Val Loss: 16393570.7143
+New best model saved with validation loss: 16393570.7143
+Epoch 13/60, Train Loss: 114215716.1143, Val Loss: 15775464.6571
+New best model saved with validation loss: 15775464.6571
+Epoch 14/60, Train Loss: 113723903.0857, Val Loss: 15430409.0000
+New best model saved with validation loss: 15430409.0000
+Epoch 15/60, Train Loss: 112974321.1429, Val Loss: 15409894.8000
+New best model saved with validation loss: 15409894.8000
+Epoch 16/60, Train Loss: 112439676.5714, Val Loss: 15170034.2286
+New best model saved with validation loss: 15170034.2286
+Epoch 17/60, Train Loss: 111736381.0143, Val Loss: 16101377.1071
+No improvement for 1 epochs
+Epoch 18/60, Train Loss: 110733385.1429, Val Loss: 15683304.2857
+No improvement for 2 epochs
+Epoch 19/60, Train Loss: 109623290.6857, Val Loss: 14703167.8571
+New best model saved with validation loss: 14703167.8571
+Epoch 20/60, Train Loss: 108840079.5429, Val Loss: 14092432.3429
+New best model saved with validation loss: 14092432.3429
+Epoch 21/60, Train Loss: 107630505.7714, Val Loss: 13313978.7429
+New best model saved with validation loss: 13313978.7429
+Epoch 22/60, Train Loss: 106656368.5714, Val Loss: 14998092.2286
+No improvement for 1 epochs
+Epoch 23/60, Train Loss: 105308210.5143, Val Loss: 14244121.5714
+No improvement for 2 epochs
+Epoch 24/60, Train Loss: 103461325.8857, Val Loss: 14371788.4571
+No improvement for 3 epochs
+Epoch 25/60, Train Loss: 102190130.5143, Val Loss: 14037325.2857
+No improvement for 4 epochs
+Epoch 26/60, Train Loss: 101759082.5964, Val Loss: 12176919.2000
+New best model saved with validation loss: 12176919.2000
+Epoch 27/60, Train Loss: 99393731.0000, Val Loss: 11487612.9714
+New best model saved with validation loss: 11487612.9714
+Epoch 28/60, Train Loss: 98766625.5429, Val Loss: 11793535.0821
+No improvement for 1 epochs
+Epoch 29/60, Train Loss: 97394301.1571, Val Loss: 12399997.3143
+No improvement for 2 epochs
+Epoch 30/60, Train Loss: 94972514.2857, Val Loss: 11106809.8286
+New best model saved with validation loss: 11106809.8286
+Epoch 31/60, Train Loss: 95342608.4214, Val Loss: 10924762.7429
+New best model saved with validation loss: 10924762.7429
+Epoch 32/60, Train Loss: 92182278.6286, Val Loss: 11897562.5714
+No improvement for 1 epochs
+Epoch 33/60, Train Loss: 89605849.4429, Val Loss: 10089920.5714
+New best model saved with validation loss: 10089920.5714
+Epoch 34/60, Train Loss: 88023329.3929, Val Loss: 9675346.1143
+New best model saved with validation loss: 9675346.1143
+Epoch 35/60, Train Loss: 87237298.4143, Val Loss: 9280057.6286
+New best model saved with validation loss: 9280057.6286
+Epoch 36/60, Train Loss: 85650139.3714, Val Loss: 9203255.8286
+New best model saved with validation loss: 9203255.8286
+Epoch 37/60, Train Loss: 83412241.7714, Val Loss: 12439392.6000
+No improvement for 1 epochs
+Epoch 38/60, Train Loss: 81977740.6286, Val Loss: 10836076.1143
+No improvement for 2 epochs
+Epoch 39/60, Train Loss: 75757412.6429, Val Loss: 14130026.2857
+No improvement for 3 epochs
+Epoch 40/60, Train Loss: 76314571.5429, Val Loss: 13907994.1143
+No improvement for 4 epochs
+Epoch 41/60, Train Loss: 77620675.2571, Val Loss: 9071062.5143
+New best model saved with validation loss: 9071062.5143
+Epoch 42/60, Train Loss: 73035040.9143, Val Loss: 11486171.7714
+No improvement for 1 epochs
+Epoch 43/60, Train Loss: 71317450.5143, Val Loss: 10452335.2000
+No improvement for 2 epochs
+Epoch 44/60, Train Loss: 71448477.2857, Val Loss: 83503638.8571
+No improvement for 3 epochs
+Epoch 45/60, Train Loss: 68749226.2500, Val Loss: 150738479.5429
+No improvement for 4 epochs
+Epoch 46/60, Train Loss: 69085080.2571, Val Loss: 47078596.8000
+No improvement for 5 epochs
+Epoch 47/60, Train Loss: 65980757.4857, Val Loss: 5999960.2607
+New best model saved with validation loss: 5999960.2607
+Epoch 48/60, Train Loss: 66342008.2571, Val Loss: 12103516.5714
+No improvement for 1 epochs
+Epoch 49/60, Train Loss: 63292709.6286, Val Loss: 13084473.6143
+No improvement for 2 epochs
+Epoch 50/60, Train Loss: 62469501.7429, Val Loss: 98217241.1429
+No improvement for 3 epochs
+Epoch 51/60, Train Loss: 63641742.2214, Val Loss: 52485684.5714
+No improvement for 4 epochs
+Epoch 52/60, Train Loss: 64384917.7571, Val Loss: 30419902.8571
+No improvement for 5 epochs
+Epoch 53/60, Train Loss: 63725457.1429, Val Loss: 6645313.0857
+No improvement for 6 epochs
+Epoch 54/60, Train Loss: 57758302.7429, Val Loss: 12357829.5143
+No improvement for 7 epochs
+Epoch 55/60, Train Loss: 57415464.6714, Val Loss: 12060394.6857
+No improvement for 8 epochs
+Epoch 56/60, Train Loss: 56258684.7429, Val Loss: 4441599.0357
+New best model saved with validation loss: 4441599.0357
+Epoch 57/60, Train Loss: 53750489.2571, Val Loss: 5837011.7000
+No improvement for 1 epochs
+Epoch 58/60, Train Loss: 50784577.7143, Val Loss: 11005825.2571
+No improvement for 2 epochs
+Epoch 59/60, Train Loss: 58726463.8286, Val Loss: 6991173.4857
+No improvement for 3 epochs
+Epoch 60/60, Train Loss: 51012103.0857, Val Loss: 49870466.2857
+No improvement for 4 epochs
+Training completed in 9.23 minutes
+Best validation loss: 4441599.0357
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 64, Filters: [16, 32, 64]):
+Mean Squared Error: 10062255104.0000
+Mean Absolute Error: 84551.2656
+R² Score: -66.0576
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 64, Filters = [64, 128, 256]
+================================================================================
+
+Model initialized with filters: [64, 128, 256]
+
+Starting training...
+Epoch 1/60, Train Loss: 116816564.1143, Val Loss: 16635240.2857
+New best model saved with validation loss: 16635240.2857
+Epoch 2/60, Train Loss: 116747197.9429, Val Loss: 16634402.9714
+New best model saved with validation loss: 16634402.9714
+Epoch 3/60, Train Loss: 116597847.8857, Val Loss: 16628994.4357
+New best model saved with validation loss: 16628994.4357
+Epoch 4/60, Train Loss: 116376426.4000, Val Loss: 16620599.7571
+New best model saved with validation loss: 16620599.7571
+Epoch 5/60, Train Loss: 115991081.7143, Val Loss: 16579410.4000
+New best model saved with validation loss: 16579410.4000
+Epoch 6/60, Train Loss: 115587684.2286, Val Loss: 16475704.5714
+New best model saved with validation loss: 16475704.5714
+Epoch 7/60, Train Loss: 114920921.5714, Val Loss: 16321126.5143
+New best model saved with validation loss: 16321126.5143
+Epoch 8/60, Train Loss: 114415934.1714, Val Loss: 16185393.7143
+New best model saved with validation loss: 16185393.7143
+Epoch 9/60, Train Loss: 113405933.3714, Val Loss: 16361613.9429
+No improvement for 1 epochs
+Epoch 10/60, Train Loss: 112347615.5714, Val Loss: 15699061.7143
+New best model saved with validation loss: 15699061.7143
+Epoch 11/60, Train Loss: 111543334.5143, Val Loss: 15996459.5571
+No improvement for 1 epochs
+Epoch 12/60, Train Loss: 109620054.3429, Val Loss: 15832039.6571
+No improvement for 2 epochs
+Epoch 13/60, Train Loss: 108662460.5750, Val Loss: 15236445.9429
+New best model saved with validation loss: 15236445.9429
+Epoch 14/60, Train Loss: 107045294.6286, Val Loss: 14829673.0286
+New best model saved with validation loss: 14829673.0286
+Epoch 15/60, Train Loss: 105119114.1000, Val Loss: 13383386.2857
+New best model saved with validation loss: 13383386.2857
+Epoch 16/60, Train Loss: 103624328.1429, Val Loss: 13593610.6286
+No improvement for 1 epochs
+Epoch 17/60, Train Loss: 102927590.8571, Val Loss: 12807026.7429
+New best model saved with validation loss: 12807026.7429
+Epoch 18/60, Train Loss: 99693054.0286, Val Loss: 11091334.9714
+New best model saved with validation loss: 11091334.9714
+Epoch 19/60, Train Loss: 98112807.7714, Val Loss: 11827474.8000
+No improvement for 1 epochs
+Epoch 20/60, Train Loss: 93400357.3429, Val Loss: 12877244.1143
+No improvement for 2 epochs
+Epoch 21/60, Train Loss: 91154684.1143, Val Loss: 10605478.5143
+New best model saved with validation loss: 10605478.5143
+Epoch 22/60, Train Loss: 89358940.5857, Val Loss: 10260621.8286
+New best model saved with validation loss: 10260621.8286
+Epoch 23/60, Train Loss: 87316024.8000, Val Loss: 10715179.8857
+No improvement for 1 epochs
+Epoch 24/60, Train Loss: 85478878.5143, Val Loss: 10175298.7429
+New best model saved with validation loss: 10175298.7429
+Epoch 25/60, Train Loss: 81837704.0000, Val Loss: 9822109.4161
+New best model saved with validation loss: 9822109.4161
+Epoch 26/60, Train Loss: 80201646.4714, Val Loss: 7859432.6857
+New best model saved with validation loss: 7859432.6857
+Epoch 27/60, Train Loss: 77677099.7714, Val Loss: 10471019.1786
+No improvement for 1 epochs
+Epoch 28/60, Train Loss: 72684251.9143, Val Loss: 10994404.3714
+No improvement for 2 epochs
+Epoch 29/60, Train Loss: 73993633.5429, Val Loss: 13058405.2714
+No improvement for 3 epochs
+Epoch 30/60, Train Loss: 71996702.4000, Val Loss: 10432101.2571
+No improvement for 4 epochs
+Epoch 31/60, Train Loss: 65692066.0571, Val Loss: 11481655.1429
+No improvement for 5 epochs
+Epoch 32/60, Train Loss: 66155128.2000, Val Loss: 12137926.0000
+No improvement for 6 epochs
+Epoch 33/60, Train Loss: 64730373.8286, Val Loss: 13976976.1143
+No improvement for 7 epochs
+Epoch 34/60, Train Loss: 66843794.9571, Val Loss: 6531314.8000
+New best model saved with validation loss: 6531314.8000
+Epoch 35/60, Train Loss: 64489402.2857, Val Loss: 5443990.2857
+New best model saved with validation loss: 5443990.2857
+Epoch 36/60, Train Loss: 59277145.6000, Val Loss: 12899201.3071
+No improvement for 1 epochs
+Epoch 37/60, Train Loss: 56502818.3571, Val Loss: 7326748.1143
+No improvement for 2 epochs
+Epoch 38/60, Train Loss: 59748337.6000, Val Loss: 57306063.7714
+No improvement for 3 epochs
+Epoch 39/60, Train Loss: 63375684.6286, Val Loss: 39901381.9429
+No improvement for 4 epochs
+Epoch 40/60, Train Loss: 59333645.6000, Val Loss: 13428291.2000
+No improvement for 5 epochs
+Epoch 41/60, Train Loss: 53770618.9429, Val Loss: 46097274.9714
+No improvement for 6 epochs
+Epoch 42/60, Train Loss: 55338163.8857, Val Loss: 24538867.8857
+No improvement for 7 epochs
+Epoch 43/60, Train Loss: 54982543.1857, Val Loss: 293667541.0286
+No improvement for 8 epochs
+Epoch 44/60, Train Loss: 52061265.0143, Val Loss: 395153526.8571
+No improvement for 9 epochs
+Epoch 45/60, Train Loss: 53779847.1143, Val Loss: 211763714.7429
+No improvement for 10 epochs
+Epoch 46/60, Train Loss: 53547797.2286, Val Loss: 87802268.3429
+No improvement for 11 epochs
+Epoch 47/60, Train Loss: 53119041.2429, Val Loss: 291479583.0857
+No improvement for 12 epochs
+Epoch 48/60, Train Loss: 53816046.1429, Val Loss: 199900032.9143
+No improvement for 13 epochs
+Epoch 49/60, Train Loss: 54312791.5429, Val Loss: 49751101.0286
+No improvement for 14 epochs
+Epoch 50/60, Train Loss: 47673396.9143, Val Loss: 78888354.9714
+No improvement for 15 epochs
+Early stopping triggered after 50 epochs
+Training completed in 32.16 minutes
+Best validation loss: 5443990.2857
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 64, Filters: [64, 128, 256]):
+Mean Squared Error: 2941743616.0000
+Mean Absolute Error: 48874.9414
+R² Score: -18.6046
+
+================================================================================
+STARTING EXPERIMENT: Batch Size = 64, Filters = [128, 256, 512]
+================================================================================
+
+Model initialized with filters: [128, 256, 512]
+
+Starting training...
+Epoch 1/60, Train Loss: 116791858.5143, Val Loss: 16633932.1143
+New best model saved with validation loss: 16633932.1143
+Epoch 2/60, Train Loss: 116649732.4929, Val Loss: 16632905.6000
+New best model saved with validation loss: 16632905.6000
+Epoch 3/60, Train Loss: 116330669.9429, Val Loss: 16628237.9429
+New best model saved with validation loss: 16628237.9429
+Epoch 4/60, Train Loss: 115819350.6286, Val Loss: 16573867.8286
+New best model saved with validation loss: 16573867.8286
+Epoch 5/60, Train Loss: 115274476.1143, Val Loss: 16523909.1429
+New best model saved with validation loss: 16523909.1429
+Epoch 6/60, Train Loss: 114274103.7714, Val Loss: 16260004.8571
+New best model saved with validation loss: 16260004.8571
+Epoch 7/60, Train Loss: 113211018.1714, Val Loss: 16091515.9429
+New best model saved with validation loss: 16091515.9429
+Epoch 8/60, Train Loss: 111793629.2571, Val Loss: 15787959.7714
+New best model saved with validation loss: 15787959.7714
+Epoch 9/60, Train Loss: 110266393.8286, Val Loss: 15525631.7714
+New best model saved with validation loss: 15525631.7714
+Epoch 10/60, Train Loss: 108211200.2286, Val Loss: 15707531.8857
+No improvement for 1 epochs
+Epoch 11/60, Train Loss: 106669583.3714, Val Loss: 15078000.0000
+New best model saved with validation loss: 15078000.0000
+Epoch 12/60, Train Loss: 103894224.0000, Val Loss: 14223748.6857
+New best model saved with validation loss: 14223748.6857
+Epoch 13/60, Train Loss: 102066313.4857, Val Loss: 15188027.0286
+No improvement for 1 epochs
+Epoch 14/60, Train Loss: 100007869.9429, Val Loss: 13121270.4571
+New best model saved with validation loss: 13121270.4571
+Epoch 15/60, Train Loss: 97800134.9714, Val Loss: 13618800.5714
+No improvement for 1 epochs
+Epoch 16/60, Train Loss: 95681925.7143, Val Loss: 12680254.5143
+New best model saved with validation loss: 12680254.5143
+Epoch 17/60, Train Loss: 91205928.0500, Val Loss: 12828509.6571
+No improvement for 1 epochs
+Epoch 18/60, Train Loss: 87477399.8857, Val Loss: 11333193.4857
+New best model saved with validation loss: 11333193.4857
+Epoch 19/60, Train Loss: 84747986.0000, Val Loss: 15209208.5714
+No improvement for 1 epochs
+Epoch 20/60, Train Loss: 81970412.1143, Val Loss: 10472315.4286
+New best model saved with validation loss: 10472315.4286
+Epoch 21/60, Train Loss: 78362878.7429, Val Loss: 7737623.9000
+New best model saved with validation loss: 7737623.9000
+Epoch 22/60, Train Loss: 74716307.6571, Val Loss: 14493420.2857
+No improvement for 1 epochs
+Epoch 23/60, Train Loss: 74792935.0929, Val Loss: 9434508.1286
+No improvement for 2 epochs
+Epoch 24/60, Train Loss: 70176865.3714, Val Loss: 9949464.8571
+No improvement for 3 epochs
+Epoch 25/60, Train Loss: 67575180.8000, Val Loss: 25731853.0286
+No improvement for 4 epochs
+Epoch 26/60, Train Loss: 65306281.8143, Val Loss: 105605585.3714
+No improvement for 5 epochs
+Epoch 27/60, Train Loss: 64370076.0286, Val Loss: 49236240.6857
+No improvement for 6 epochs
+Epoch 28/60, Train Loss: 63433306.6286, Val Loss: 17003482.9714
+No improvement for 7 epochs
+Epoch 29/60, Train Loss: 62502683.8000, Val Loss: 38904592.2286
+No improvement for 8 epochs
+Epoch 30/60, Train Loss: 63546286.6000, Val Loss: 49297039.5429
+No improvement for 9 epochs
+Epoch 31/60, Train Loss: 60328582.5429, Val Loss: 16661964.2286
+No improvement for 10 epochs
+Epoch 32/60, Train Loss: 61632531.7714, Val Loss: 55072569.8286
+No improvement for 11 epochs
+Epoch 33/60, Train Loss: 60967750.1714, Val Loss: 44211285.7143
+No improvement for 12 epochs
+Epoch 34/60, Train Loss: 57890331.3286, Val Loss: 24167873.8286
+No improvement for 13 epochs
+Epoch 35/60, Train Loss: 55319060.9143, Val Loss: 219261604.5714
+No improvement for 14 epochs
+Epoch 36/60, Train Loss: 62420561.2429, Val Loss: 77303498.0571
+No improvement for 15 epochs
+Early stopping triggered after 36 epochs
+Training completed in 62.86 minutes
+Best validation loss: 7737623.9000
+
+Evaluating model performance...
+Model Evaluation Metrics (Batch: 64, Filters: [128, 256, 512]):
+Mean Squared Error: 743262336.0000
+Mean Absolute Error: 24223.6523
+R² Score: -3.9533
+
+================================================================================
+BEST CONFIGURATION:
+Batch Size: 64
+Filter Configuration: 128-256-512
+MSE: 743262336.0000, MAE: 24223.6523, R²: -3.9533
+Training Time: 62.86 minutes
+================================================================================
+
+All experiment results saved to: training_results/run_20250516_211430
+Job finished on Sat May 17 05:00:20 +08 2025

@@ -5,6 +5,8 @@
 *.jpeg
 *.tif
 *.tiff
+!dataset/batch_filter_run_20250524_015808.png
+!dataset/batch_filter_run_20250524_015808_copy.png
 
 # Ignore Excel and CSV files
 *.xlsx
@@ -12,6 +14,7 @@
 
 # But keep specific CSV file
 !dataset/density.csv
+!dataset/training_results/experiment_comparison.csv
 
 
 # Ignore large datasets and results
